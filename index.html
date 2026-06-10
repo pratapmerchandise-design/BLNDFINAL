@@ -611,6 +611,15 @@ color:#d7a04b;
   color: var(--blush); text-transform: uppercase;
   text-align: center; line-height: 1.9; font-weight: 500;
 }
+#brushes{
+    scroll-margin-top:-50px;
+}
+#collection{
+    scroll-margin-top:90px;
+}
+#marquee3{
+    scroll-margin-top:17px;
+}
 
 /* ══════════════════════════
    FEATURES GRID
@@ -677,6 +686,7 @@ color:#d7a04b;
     color: #2C1A0E;
     margin-bottom: 56px;
   }
+
 
   .section-title em {
     font-style: italic;
@@ -981,10 +991,11 @@ transform:translateY(-2px);
 /* ══════════════════════════
    FOOTER
 ══════════════════════════ */
+
 footer {
   border-top: .5px solid var(--border-blush);
   padding: 2.8% 5%;
-  display: flex; justify-content: space-between; align-items: center;
+  display: flex; justify-content: space-between ; align-items: left;
   background: var(--bg-dark);
 }
 .footer-logo {
@@ -1170,11 +1181,11 @@ footer {
 <nav id="mainNav">
   <a class="nav-logo" href="#">BLND</a>
   <ul class="nav-links">
-    <li><a href="#collection">Collection</a></li>
-    <li><a href="#">Our Story</a></li>
-    <li><a href="#">Stockists</a></li>
+    <li><a href="#brushes">Collection</a></li>
+    <li><a href="#collection">See more</a></li>
+    <li><a href="#marquee3">Connect with us</a></li>
   </ul>
-  <a href="#notify" class="nav-cta">Join the Waitlist</a>
+  <a href="#brushes" class="nav-cta" onclick="openPopup()">Join the Waitlist</a>
 </nav>
 
 <!-- ══════════════════════════
@@ -1194,7 +1205,7 @@ footer {
     <h1 class="hero-title">Your brush.<br>Your ritual.<br><em>Your finish.</em></h1>
     <p class="hero-subtitle">Blending shouldn't be complicated. BLND gives you two tools in one — designed for real girls, real routines, real results.</p>
     <div class="hero-actions">
-      <a href="#notify" class="btn-primary">Shop the Collection</a>
+      <a href="#brushes" class="btn-primary">Shop the Collection</a>
       <a href="#collection" class="btn-ghost">See what's inside</a>
     </div>
   </div>
@@ -1234,7 +1245,7 @@ footer {
 
 <!-- ══════════════════════════
      COLLECTION SECTION
-══════════════════════════ --><section class="section">
+══════════════════════════ --><section class="section" id="brushes">
   <p class="section-label">The BLND Collection</p>
   <h2 class="section-title">Made for <em>Every Ritual</em></h2>
 
