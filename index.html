@@ -564,7 +564,13 @@ nav::after {
 .split-detail-item::before {
   content: '—'; display: block; color: var(--blush); margin-bottom: .4rem; font-size: .8rem;
 }
-
+ .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 2rem;
+  }
+ 
 /* ══════════════════════════
    FIRST-IN-INDIA
 ══════════════════════════ */
@@ -711,7 +717,7 @@ nav::after {
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
   }
 
@@ -911,7 +917,7 @@ transform:translateY(-2px);
 
 
   @media (max-width: 900px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: repeat(1, 1fr); }
   }
 
   @media (max-width: 520px) {
@@ -1457,8 +1463,8 @@ fetch("https://script.google.com/macros/s/AKfycbyz7tzMm0Z-Nf26TquXiYEFIQpM4FgIwQ
         </button>
       </div>
       <div class="card-body">
-        <p class="card-name">Dual-Sided Foundation Brush</p>
-        <p class="card-sub">Synthetic fibre · Weighted handle</p>
+        <p class="card-name">BLND Essential 5 Duo Set (10-in-1)</p>
+        <p class="card-sub">10 functions. 5 brushes. Endless possibilities.</p>
         <div class="swatches">
           <span class="swatch active" style="background:#2C1A0E;" title="Mahogany"></span>
           <span class="swatch" style="background:#C4A882;" title="Sand"></span>
@@ -1492,8 +1498,8 @@ Notify Me
         </button>
       </div>
       <div class="card-body">
-        <p class="card-name">Kabuki Blending Brush</p>
-        <p class="card-sub">Dense dome · Powder & cream</p>
+        <p class="card-name">BLND Flawless Base Duo</p>
+        <p class="card-sub">Blend. Build. Perfect.</p>
         <div class="swatches">
           <span class="swatch active" style="background:#2C1A0E;" title="Mahogany"></span>
           <span class="swatch" style="background:#C4A882;" title="Sand"></span>
@@ -1525,8 +1531,8 @@ Notify Me
         </button>
       </div>
       <div class="card-body">
-        <p class="card-name">Precision Liner Brush</p>
-        <p class="card-sub">Ultra-fine tip · Gel & liquid</p>
+        <p class="card-name">BLND Sculpt & Glow Duo</p>
+        <p class="card-sub">Shape. Flush. Glow.</p>
         <div class="swatches">
           <span class="swatch active" style="background:#2C1A0E;" title="Mahogany"></span>
         </div>
@@ -1543,41 +1549,7 @@ Notify Me
     </div>
 
     <!-- Card 4 -->
-    <div class="card">
-      <div class="card-img-wrap">
-        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" style="background:#ECE3D8;">
-          <ellipse cx="150" cy="200" rx="65" ry="11" fill="rgba(60,30,10,0.08)"/>
-          <rect x="143" y="88" width="14" height="100" rx="7" fill="#8B6A4A"/>
-          <ellipse cx="150" cy="86" rx="36" ry="20" fill="#C4A882"/>
-          <ellipse cx="150" cy="79" rx="28" ry="12" fill="#A0825A"/>
-        </svg>
-        <button class="wishlist-btn" aria-label="Add to wishlist">
-          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        </button>
-      </div>
-      <div class="card-body">
-        <p class="card-name">Fan Highlight Brush</p>
-        <p class="card-sub">Featherlight · Sculpt & glow</p>
-        <div class="swatches">
-          <span class="swatch active" style="background:#2C1A0E;" title="Mahogany"></span>
-          <span class="swatch" style="background:#C4A882;" title="Sand"></span>
-          <span class="swatch" style="background:#FAFAFA;" title="Ivory"></span>
-        </div>
-        <div class="card-footer">
-          <div class="price">
-            <span class="original">₹949</span>₹749
-          </div>
-          <button class="notify-btn"
-onclick="openPopup()">
-
-Notify Me
-
-</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  
 </section>
 
 <!-- ── STATS ── -->
