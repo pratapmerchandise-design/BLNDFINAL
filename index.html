@@ -195,6 +195,7 @@
     font-weight: 400; line-height: .95; letter-spacing: .01em;
     color: var(--text-cream);
     opacity: 0; animation: fadeUp 1s ease .5s forwards;
+    
   }
   .hero-title em { font-style: italic; color: var(--blush-light); font-family: var(--font-serif); font-weight: 200; }
 
@@ -1243,15 +1244,52 @@
     .nav-logo { font-size: clamp(1.5rem, 6vw, 1.8rem); }
     .nav-links { display: none; }
     .nav-cta { padding: 1.5% 4%; font-size: clamp(.58rem, 2.5vw, .64rem); }
+.hero-video {
+  height: 100svh;
+  display: grid;
+  place-items: center;
+}
 
-    .hero-video { height: 100svh; }
-    .hero-video-content { max-width: 100%; padding: 0 6%; text-align: center; }
-    .hero-title { font-size: clamp(3rem, 13vw, 5rem); }
-    .hero-subtitle { font-size: clamp(.7rem, 3vw, .8rem); max-width: 100%; margin: 4% auto 0; }
-    .hero-actions {
-      justify-content: center; flex-direction: column;
-      gap: 3%; margin-top: 7%; align-items: center;
-    }
+.hero-video-content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 7% !important;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 13vw, 5rem);
+  width: 100%;
+  text-align: center;
+}
+
+.hero-subtitle,
+.viewer-count {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.hero-actions {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 7%;
+}
     @media (max-width: 768px){
 
     .contact-btn{
@@ -1378,6 +1416,43 @@
     .btn-primary { width: 90%; }
     .email-form { width: 95%; }
   }
+/* FORCE HERO CONTENT TO THE TRUE CENTER — MOBILE ONLY */
+@media (max-width: 768px) {
+  .hero-video {
+    justify-content: center;
+  }
+
+  .hero-video-content {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    padding: 0 7%;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-title,
+  .hero-subtitle,
+  .viewer-count {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-subtitle,
+  .viewer-count {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+}
   </style>
   </head>
   <script>
