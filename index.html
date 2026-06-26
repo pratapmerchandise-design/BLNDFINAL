@@ -1,1949 +1,1423 @@
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BLND — India's First Dual-Sided Makeup Brush</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;0,9..144,400;1,9..144,200;1,9..144,300;1,9..144,400&family=Nunito:wght@300;400;500;600&family=Italiana&display=swap" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-  /* ── RESET & VARIABLES ── */
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg-deep:       #0D0703;
-    --bg-dark:       #130904;
-    --bg-mid:        #1C0E07;
-    --bg-panel:      #231209;
-    --brown-rich:    #5C2D0E;
-    --brown-warm:    #8C4A20;
-    --brown-light:   #C07848;
-    --brown-glow:    #D4906A;
-    --blnd-gold:      #D8A24C;
-    --blnd-gold-light:#F3C774;
-    --blnd-gold-dark: #B87A2E;
-    --blush:         #D8A24C;
-    --blush-light:   #F3C774;
-    --blush-pale:    #F5DDD5;
-    --gold-deep:     #7A5518;
-    --gold:          #C4973B;
-    --gold-mid:      #D4AB55;
-    --gold-light:    #E8C882;
-    --gold-pale:     #F2DFA8;
-    --cream-bg:      #F9F3EE;
-    --cream-warm:    #F0E6D8;
-    --cream-card:    #F6EDE3;
-    --cream-text:    #3A2010;
-    --cream-muted:   #9C7060;
-    --text-cream:    #FAF4EC;
-    --text-warm:     #DEC89A;
-    --text-muted:    #8B6A4A;
-    --text-dim:      #5A3E28;
-    --border-gold:   rgba(196,151,59,0.2);
-    --border-blush:  rgba(212,137,106,0.2);
-    --border-faint:  rgba(196,151,59,0.1);
-
-    --font-display:  'Italiana', serif;
-    --font-serif:    'Fraunces', serif;
-    --font-body:     'Nunito', sans-serif;
+    --orange: #FF6B00;
+    --orange-bright: #FF8C00;
+    --orange-dim: #CC5500;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --dark3: #222222;
+    --white: #F5F5F5;
+    --gray: #888;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: var(--font-body);
-    background: var(--bg-deep);
-    color: var(--text-cream);
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--white);
     overflow-x: hidden;
-    cursor: none;
   }
+.review-cta { 
+  text-align: center;
+  margin-top: 42px;
+}
 
-  /* ── CUSTOM CURSOR ── */
-  .cursor {
-    position: fixed; width: 7px; height: 7px;
-    background: var(--blush); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width .25s, height .25s;
-  }
-  .cursor-ring {
-    position: fixed; width: 30px; height: 30px;
-    border: 1px solid rgba(212,137,106,.5); border-radius: 50%;
-    pointer-events: none; z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: width .3s, height .3s, opacity .3s;
-  }
-  @media (pointer: coarse) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
+.review-cta p {
+  font-family: 'Barlow Condensed', sans-serif;
+  color: var(--gray);
+  letter-spacing: 3px;
+  font-size: 0.78rem;
+  margin-bottom: 16px;
+}
 
-  /* ── NAV ── */
+.review-btn {
+  display: inline-block;
+  background: var(--orange);
+  color: var(--black);
+  text-decoration: none;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  padding: 15px 30px;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  transition: 0.25s;
+}
+
+.review-btn:hover {
+  background: var(--orange-bright);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255,107,0,0.35);
+}
+  /* ─── NAV ─── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 1.8% 5%;
-    background: linear-gradient(to bottom, rgba(13,7,3,.92) 0%, transparent 100%);
-    transform: translateY(0);
-    transition: transform .45s cubic-bezier(.4,0,.2,1), background .3s ease;
-    will-change: transform;
-  }
-  nav.nav--hidden { transform: translateY(-110%); }
-  nav.nav--solid {
-    background: rgba(13,7,3,.97);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-  nav::after {
-    content: ''; position: absolute; bottom: 0; left: 5%; right: 5%;
-    height: .5px; background: var(--border-blush);
-  }
-  .nav-logo{
-      font-family: 'Montserrat', sans-serif;
-      font-size: 2rem;
-      font-weight: 900;
-      letter-spacing: -2px;
-      text-transform: uppercase;
-      transform: scaleX(1.3);
-      display: inline-block;
-      transform-origin: left center;
-
-
-      background: linear-gradient(
-          180deg,
-          #f4cf85 0%,
-          #d8a24c 55%,
-          #b87a2e 100%
-      );
-
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-
-      text-decoration: none;
-  }
-  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-  .nav-links a {
-    font-family: var(--font-body);
-    font-size: clamp(.6rem, .95vw, .68rem); letter-spacing: .22em; text-transform: uppercase;
-    color: var(--text-muted); text-decoration: none; transition: color .3s; font-weight: 400;
-    white-space: nowrap;
-  }
-  .nav-links a:hover { color: var(--blush-light); }
-  .nav-cta {
-    font-family: var(--font-body);
-    font-size: clamp(.58rem, .95vw, .64rem); letter-spacing: .2em; text-transform: uppercase;
-    padding: .7% 1.8%; border: .5px solid var(--blush);
-    color: var(--blush); text-decoration: none;
-    transition: all .35s ease; background: transparent; white-space: nowrap; font-weight: 500;
-  }
-  .nav-cta:hover { background: var(--blush); color: var(--bg-deep); }
-
-  /* ══════════════════════════
-    VIDEO HERO
-  ══════════════════════════ */
-  .hero-video {
-    position: relative;
-    width: 100%; height: 100vh;
-    overflow: hidden;
-    display: flex; align-items: center;
-  }
-
-  .hero-video-fallback {
-    position: absolute; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse 80% 80% at 60% 40%, rgba(92,45,14,.55) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 60% at 20% 70%, rgba(212,137,106,.15) 0%, transparent 55%),
-      var(--bg-deep);
-    animation: bgShift 8s ease-in-out infinite alternate;
-  }
-  @keyframes bgShift {
-    0%   { filter: brightness(1); }
-    100% { filter: brightness(1.08); }
-  }
-
-  .hero-video-bg {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
-    z-index: 1;
-  }
-
-  .hero-overlay {
-    position: absolute; inset: 0; z-index: 2;
-    background:
-      linear-gradient(to right, rgba(13,7,3,.82) 0%, rgba(13,7,3,.55) 50%, rgba(13,7,3,.35) 100%),
-      linear-gradient(to top, rgba(13,7,3,.5) 0%, transparent 50%);
-  }
-
-  .hero-video-content {
-    position: relative; z-index: 3;
-    padding: 0 6%;
-    max-width: 55%;
-  }
-
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: .7rem;
-    font-family: var(--font-body);
-    font-size: clamp(.52rem, .95vw, .6rem); letter-spacing: .35em; text-transform: uppercase;
-    color: var(--blush); margin-bottom: 2.5%;
-    opacity: 0; animation: fadeUp 1s ease .3s forwards;
-  }
-  .hero-badge::before { content: ''; width: 2rem; height: .5px; background: var(--blush); }
-
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(3.8rem, 8.5vw, 8rem);
-    font-weight: 400; line-height: .95; letter-spacing: .01em;
-    color: var(--text-cream);
-    opacity: 0; animation: fadeUp 1s ease .5s forwards;
-    
-  }
-  .hero-title em { font-style: italic; color: var(--blush-light); font-family: var(--font-serif); font-weight: 200; }
-
-  .hero-subtitle {
-    font-family: var(--font-body);
-    font-size: clamp(.72rem, 1.3vw, .88rem); letter-spacing: .05em;
-    color: rgba(250,244,236,.65); margin-top: 2.5%;
-    max-width: 88%; line-height: 2;
-    opacity: 0; animation: fadeUp 1s ease .7s forwards;
-    font-weight: 300;
-  }
-
-  .hero-actions {
-    display: flex; align-items: center; gap: 2.5rem; margin-top: 4%;
-    opacity: 0; animation: fadeUp 1s ease .9s forwards;
-  }
-
-  .btn-primary {
-    font-family: var(--font-body);
-    font-size: clamp(.6rem, 1.1vw, .68rem); letter-spacing: .2em; text-transform: uppercase;
-    padding: 1.1% 3.2%;
-    background: linear-gradient(135deg, var(--blush), var(--brown-glow));
-    color: #fff; text-decoration: none; font-weight: 600;
-    transition: all .4s ease; display: inline-block;
-    box-shadow: 0 4px 28px rgba(212,137,106,.3);
-    white-space: nowrap;
-  }
-  .btn-primary:hover {
-    background: linear-gradient(135deg, var(--blush-light), var(--blush));
-    transform: translateY(-2px);
-    box-shadow: 0 8px 36px rgba(212,137,106,.4);
-  }
-
-  .btn-ghost {
-    font-family: var(--font-body);
-    font-size: clamp(.6rem, 1.1vw, .68rem); letter-spacing: .18em; text-transform: uppercase;
-    color: rgba(250,244,236,.6); text-decoration: none;
-    display: flex; align-items: center; gap: .8rem; transition: color .3s; font-weight: 400;
-    white-space: nowrap;
-  }
-  .btn-ghost::after { content: '→'; transition: transform .3s; }
-  .btn-ghost:hover { color: var(--text-cream); }
-  .btn-ghost:hover::after { transform: translateX(4px); }
-
-  .hero-bottom-row {
-    position: absolute; bottom: 4%; left: 5%; right: 5%; z-index: 4;
-    display: flex; justify-content: space-between; align-items: flex-end;
-    opacity: 0; animation: fadeIn 1s ease 1.4s forwards;
-  }
-  .hero-badges-row { display: flex; gap: 1.5rem; }
-  .badge {
-    display: inline-flex; align-items: center; gap: .45rem;
-    font-family: var(--font-body);
-    font-size: clamp(.5rem, .85vw, .56rem); letter-spacing: .2em; text-transform: uppercase;
-    color: rgba(232,180,160,.7); padding: .5% 1%;
-    border: .5px solid rgba(212,137,106,.25);
-    font-weight: 400;
-  }
-  .badge::before { content: '✦'; color: var(--blush); font-size: .4rem; }
-
-  .scroll-hint {
-    display: flex; align-items: center; gap: 1rem;
-    font-family: var(--font-body);
-    font-size: clamp(.46rem, .8vw, .54rem); letter-spacing: .3em; text-transform: uppercase;
-    color: rgba(212,137,106,.5); font-weight: 300;
-  }
-  .scroll-line {
-    width: 3rem; height: .5px;
-    background: rgba(212,137,106,.35); position: relative; overflow: hidden;
-  }
-  .scroll-line::after {
-    content: ''; position: absolute; left: -100%; top: 0;
-    width: 100%; height: 100%; background: var(--blush);
-    animation: scanline 2.2s ease-in-out 2s infinite;
-  }.popup {
-    cursor: default;
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(7,3,1,.85);
+    position: fixed; top: 0; width: 100%; z-index: 1000;
+    background: rgba(10,10,10,0.95);
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+    border-bottom: 1px solid rgba(255,107,0,0.3);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 72px;
   }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-logo img { height: 52px; filter: drop-shadow(0 0 8px rgba(255,107,0,0.5)); }
+  .nav-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; color: var(--orange); letter-spacing: 2px; line-height: 1; }
+  .nav-brand span { display: block; font-size: 0.75rem; font-family: 'Barlow', sans-serif; font-weight: 300; color: var(--white); letter-spacing: 4px; text-transform: uppercase; }
 
-  .popup-box {
-    background: linear-gradient(160deg, #1c0e07 0%, #130904 100%);
-    width: 460px;
-    max-width: 92vw;
-    padding: 52px 48px 44px;
-    border: .5px solid rgba(215,160,75,.2);
-    box-shadow: 0 32px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(215,160,75,.08);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  /* decorative top line */
-  .popup-box::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 20%; right: 20%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, var(--blush), transparent);
-  }
-
-  .popup-box::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(216,162,76,.06) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .close {
-    position: absolute;
-    top: 18px; right: 22px;
-    font-size: 18px;
-    cursor: pointer;
-    color: rgba(215,160,75,.4);
-    font-family: var(--font-body);
-    font-weight: 300;
-    transition: color .3s;
-    line-height: 1;
-    margin: 0;
-  }
-  .close:hover { color: var(--blush); }
-
-  .popup-eyebrow {
-    font-family: var(--font-body);
-    font-size: .52rem;
-    letter-spacing: .38em;
-    text-transform: uppercase;
-    color: var(--blush);
-    font-weight: 500;
-    margin-bottom: 1rem;
-    display: block;
-    position: relative;
-    z-index: 1;
-  }
-
-  .popup-box h2 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 2.8rem);
-    font-weight: 400;
-    color: var(--text-cream);
-    line-height: 1.1;
-    margin-bottom: .8rem;
-    position: relative;
-    z-index: 1;
-  }
-
-  .popup-box h2 em {
-    font-style: italic;
-    color: var(--blush-light);
-    font-family: var(--font-serif);
-    font-weight: 200;
-  }
-
-  .popup-box p {
-    font-family: var(--font-body);
-    font-size: clamp(.62rem, 1.1vw, .72rem);
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-    line-height: 1.9;
-    font-weight: 300;
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .popup-box input {
-    width: 100%;
-    padding: 16px 20px;
-    background: rgba(255,255,255,.03);
-    border: .5px solid rgba(215,160,75,.2);
-    border-radius: 0;
-    color: var(--text-cream);
-    font-family: var(--font-body);
-    font-size: .72rem;
-    font-weight: 300;
-    letter-spacing: .05em;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color .3s;
-    position: relative;
-    z-index: 1;
-  }
-
-  .popup-box input:focus {
-    border-color: rgba(215,160,75,.5);
-  }
-
-  .popup-box input::placeholder {
-    color: rgba(139,106,74,.4);
-    letter-spacing: .12em;
-    font-size: .68rem;
-  }
-
-  .popup-box button[type="submit"] {
-    margin-top: 12px;
-    width: 100%;
-    padding: 15px;
-    background: linear-gradient(135deg, var(--blush-light), var(--blush));
-    color: var(--bg-deep);
-    border: none;
-    border-radius: 0;
-    font-family: var(--font-body);
-    font-size: .6rem;
-    font-weight: 700;
-    letter-spacing: .28em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all .35s ease;
-    position: relative;
-    z-index: 1;
-    box-shadow: 0 8px 28px rgba(216,162,76,.2);
-  }
-
-  .popup-box button[type="submit"]:hover {
-    background: linear-gradient(135deg, #fff5e0, var(--blush-light));
-    transform: translateY(-2px);
-    box-shadow: 0 14px 36px rgba(216,162,76,.3);
-  }
-
-@media (max-width:768px){
-
-  .viewer-count{
-    margin:14px auto 0;
-    font-size:.58rem;
-    line-height:1.4;
-    color:#a47103;
-    font-weight:600;
-    opacity:0.5;
-    text-shadow:0 2px 8px rgba(0,0,0,.45);
-    max-width:220px;
-  }
-
-  #viewerNumber{
-    color:#F3C774;
-    font-weight:800;
-  }
-
-}
-  /* ══════════════════════════
-    MARQUEE STRIP
-  ══════════════════════════ */
-  .marquee-strip {
-    background: var(--bg-dark);
-    border-top: .5px solid var(--border-blush);
-    border-bottom: .5px solid var(--border-blush);
-    overflow: hidden; padding: 1.4% 0;
-    display: flex;
-  }
-  .marquee-strip.light {
-    background: var(--blush-pale);
-    border-color: rgba(212,137,106,.35);
-  }
-  .marquee-track {
-    display: flex; flex-shrink: 0;
-    animation: marquee 28s linear infinite;
-    white-space: nowrap;
-  }
-  .marquee-strip.reverse .marquee-track { animation: marqueeReverse 28s linear infinite; }
-  .marquee-item {
-    font-family: var(--font-body);
-    font-size: clamp(.56rem, 1vw, .68rem); letter-spacing: .3em; text-transform: uppercase;
-    color: var(--text-muted); padding: 0 2.5rem; font-weight: 400;
-    display: flex; align-items: center; gap: 2.5rem;
-  }
-  .marquee-item .dot { color: var(--blush); font-size: .5rem; }
-  .marquee-strip.light .marquee-item { color: var(--cream-muted); }
-  .marquee-strip.light .marquee-item .dot { color: var(--brown-warm); }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  @keyframes marqueeReverse {
-    from { transform: translateX(-50%); }
-    to   { transform: translateX(0); }
-  }
-
-  /* ══════════════════════════
-    STATS STRIP
-  ══════════════════════════ */
-  .stats-strip {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    border-top: .5px solid var(--border-blush);
-    border-bottom: .5px solid var(--border-blush);
-    margin: 0 ;
-    background: linear-gradient(to right, var(--bg-dark), var(--bg-mid), var(--bg-dark));
-  }
-  .stat-item { padding: 2.8% 3%; position: relative; }
-  .stat-item + .stat-item::before {
-    content: ''; position: absolute; left: 0; top: 22%; bottom: 22%;
-    width: .5px; background: var(--border-blush);
-  }
-  .stat-number {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400;
-    background: linear-gradient(135deg, var(--blush-light), var(--blush));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; line-height: 1;
-  }
-  .stat-label {
-    font-family: var(--font-body);
-    font-size: clamp(.54rem, .9vw, .62rem); letter-spacing: .18em; text-transform: uppercase;
-    color: var(--text-muted); margin-top: .6%; font-weight: 400;
-  }
-
-  /* ══════════════════════════
-    SPLIT VIDEO + TEXT
-  ══════════════════════════ */
-  .split-video {
-    display: grid; grid-template-columns: 66.7% 33.3%;
-    min-height: 85vh;
-  }
-  .split-video-panel {
-    position: relative; overflow: hidden;
-  }
-  .split-video-panel video {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 1;
-  }
-  .split-video-panel .split-vid-fallback {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    z-index: 0;
-    background:
-      radial-gradient(ellipse 80% 90% at 40% 60%, rgba(140,74,32,.4) 0%, transparent 65%),
-      radial-gradient(ellipse 60% 50% at 80% 20%, rgba(212,137,106,.12) 0%, transparent 55%),
-      var(--bg-mid);
-    animation: vidFallback 6s ease-in-out infinite alternate;
-  }
-  @keyframes vidFallback {
-    0%   { filter: brightness(1); }
-    100% { filter: brightness(1.12) saturate(1.1); }
-  }
-  .split-vid-overlay {
-    position: absolute; inset: 0; z-index: 2;
-    background: linear-gradient(to right, transparent 0%, rgba(13,7,3,.5) 100%);
-  }
-  .split-text-panel {
-    background: var(--bg-panel);
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 8% 6%;
-    border-left: .5px solid var(--border-blush);
-    position: relative; overflow: hidden;
-  }
-  .split-text-panel::before {
-    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 1px;
-    background: linear-gradient(to bottom, transparent, var(--blush), transparent);
-    opacity: .4;
-  }
-  .split-eyebrow {
-    font-family: var(--font-body);
-    font-size: clamp(.52rem, .9vw, .6rem); letter-spacing: .38em; text-transform: uppercase;
-    color: var(--blush); margin-bottom: 1.8%; font-weight: 500;
-  }
-  .split-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 400; line-height: 1.1;
-    color: var(--text-cream); margin-bottom: 2%;
-  }
-  .split-title em { font-style: italic; color: var(--blush-light); font-family: var(--font-serif); font-weight: 200; }
-  .split-body {
-    font-family: var(--font-body);
-    font-size: clamp(.72rem, 1.2vw, .85rem); line-height: 2.1; color: var(--text-muted);
-    max-width: 90%; font-weight: 300; letter-spacing: .01em;
-  }
-  .split-detail {
-    margin-top: 3%;
-    display: flex; gap: 2rem;
-  }
-  .split-detail-item {
-    font-family: var(--font-body);
-    font-size: clamp(.52rem, .9vw, .6rem); letter-spacing: .2em; text-transform: uppercase;
-    color: rgba(139,106,74,.7); font-weight: 400;
-  }
-  .split-detail-item::before {
-    content: '—'; display: block; color: var(--blush); margin-bottom: .4rem; font-size: .8rem;
-  }
-
-
-  /* ══════════════════════════
-    FIRST-IN-INDIA
-  ══════════════════════════ */
-  .first-india{
-    background:
-      radial-gradient(
-        ellipse at 80% 50%,
-        rgba(216,162,76,.06) 0%,
-        transparent 60%
-      ),
-      linear-gradient(
-        180deg,
-        #130904 0%,
-        #0D0703 100%
-      );
-
-  }
-  .first-india::before {
-    content: ''; position: absolute; top: -1px; left: 4%;
-    width: 7rem; height: 2px;
-    background: linear-gradient(to right, var(--blush), transparent);
-  }
-  .first-india::after {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse 50% 80% at 100% 50%, rgba(140,74,32,.1) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .fi-eyebrow {
-    font-family: var(--font-body);
-    font-size: clamp(.52rem, .9vw, .6rem); letter-spacing: .38em; text-transform: uppercase;
-    color: var(--blush); margin-bottom: 1.2%; font-weight: 500;
-  }
-  .fi-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4.5vw, 3.2rem); font-weight: 400; line-height: 1.2;
-    color: var(--text-cream);
-  }
-  .fi-title em { font-style: italic; color: var(--blush-light); font-family: var(--font-serif); font-weight: 200; }
-  .fi-desc {
-    font-family: var(--font-body);
-    font-size: clamp(.68rem, 1.1vw, .8rem); line-height: 2; color: var(--text-muted);
-    margin-top: 1.8%; max-width: 88%; font-weight: 300; letter-spacing: .01em;
-  }
-  .fi-badge {
-    flex-shrink: 0; width: clamp(110px, 13vw, 160px); height: clamp(110px, 13vw, 160px);
-    border-radius: 50%;
-    border: .5px solid rgba(212,137,106,.35);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: .2rem;
-    position: relative; z-index: 1;
-    background: radial-gradient(circle, rgba(212,137,106,.06), transparent);
-  }
-  .fi-badge::after {
-    content: ''; position: absolute; inset: 8%;
-    border-radius: 50%; border: .5px solid rgba(212,137,106,.18);
-  }
-  .fi-badge-num {
-    font-family: var(--font-body);
-    font-size: clamp(.52rem, .85vw, .6rem); letter-spacing: .15em;
-    color: var(--blush); text-transform: uppercase;
-    text-align: center; line-height: 1.9; font-weight: 500;
-  }
-  #brushes{
-      scroll-margin-top:-50px;
-  }
-  #collection{
-      scroll-margin-top:90px;
-  }
-  #marquee3{
-      scroll-margin-top:17px;
-  }
-
-  /* ══════════════════════════
-    FEATURES GRID
-  ══════════════════════════ */
-  .features-dark {
-    margin: 0 5% 1%;
-    display: grid; grid-template-columns: repeat(4, 25%);
-    border: .5px solid var(--border-blush);
-  }
-  .feature-card-dark {
-    padding: 3.5% 3%;
-    border-right: .5px solid var(--border-blush);
-    transition: background .4s; cursor: default;
-  }
-  .feature-card-dark:last-child { border-right: none; }
-  .feature-card-dark:hover { background: rgba(212,137,106,.04); }
-  .feature-icon-line {
-    width: 2rem; height: .5px; background: var(--blush); margin-bottom: 2rem;
-  }
-  .feature-title-dark {
-    font-family: var(--font-display);
-    font-size: clamp(1.1rem, 2.2vw, 1.4rem); font-weight: 400;
-    color: var(--text-black); margin-bottom: 1%; line-height: 1.3;
-  }
-  .feature-text-dark {
-    font-family: var(--font-body);
-    font-size: clamp(.64rem, 1vw, .74rem); line-height: 2; color: var(--text-muted);
-    font-weight: 300; letter-spacing: .01em;
-  }
-
-  /* ══════════════════════════
-    COLLECTION
-  ══════════════════════════ */
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  .notify-btn {
-    position: relative;
-    background: #1a1108;
-    color: #c9a97a;
-    border: none;
-    border-radius: 30px;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    padding: 10px 22px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: color 0.3s ease, transform 0.2s ease;
-    z-index: 0;
-  }
-  .notify-btn::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: #c9a97a;
-    border-radius: 30px;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.35s cubic-bezier(0.77, 0, 0.175, 1);
-    z-index: -1;
-  }
-  .notify-btn:hover::before { transform: scaleX(1); }
-  .notify-btn:hover { color: #1a1108; transform: translateY(-2px); }
-  .notify-btn:active { transform: scale(0.97); }
-  .notify-btn:hover {
-    background: #c9a97a;
-    color: #1a1108;
-  }
-    body {
-      background: #F5EFE6;
-      font-family: 'Jost', sans-serif;
-      color: #3A2A1A;
-    }
-
-    .section {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 80px 40px;
-    }
-
-    .section-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #8B6A4A;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 4vw, 48px);
-      font-weight: 400;
-      text-align: center;
-      color: #2C1A0E;
-      margin-bottom: 56px;
-    }
-
-
-    .section-title em {
-      font-style: italic;
-      color: #8B6A4A;
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      padding: 2rem;
-    }
-  
-    .blnd-card {
-      background: #f0ece6;
-      border-radius: 6px;
-      overflow: hidden;
-    }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
     
-  
-    .blnd-img {
-      position: relative;
-      height: 260px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background-image: url('your-image.png');
-      background-size: cover;
-      background-position: center;
-    }
-  
-    .blnd-badge {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: #1a1108;
-      color: #c9a97a;
-      font-size: 10px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 20px;
-      z-index: 3;
-    }
-  
-    .blnd-heart {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      z-index: 3;
-      font-size: 18px;
-      color: #888;
-      cursor: pointer;
-    }
-  
-    /* THE SLIDE-UP PANEL */
-    .blnd-panel {
-      position: absolute;
-      bottom: -100%;
-      left: 0;
-      right: 0;
-      background: rgba(26, 17, 8, 0.55);
-      padding: 16px;
-      transition: bottom 0.38s ease;
-      z-index: 2;
-    }
- 
-  
-    .blnd-panel-tag {
-      font-size: 10px;
-      color: #c9a97a;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin: 0 0 6px;
-    }
-  
-    .blnd-panel-body {
-      font-size: 12px;
-      color: #f0e8dc;
-      line-height: 1.65;
-      margin: 0;
-    }
-  
-    .blnd-info {
-      background: #fff;
-      padding: 14px 16px 16px;
-    }
-  
-    .blnd-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: #1a1108;
-      margin: 0 0 2px;
-    }
-  
-    .blnd-sub {
-      font-size: 11px;
-      color: #999;
-      margin: 0 0 10px;
-      font-style: italic;
-    }
-  
-    .blnd-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-  
-    .blnd-dots {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 10px;
-    }
-  
-    .blnd-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-  
-    .blnd-dot.ring {
-      outline: 1.5px solid #1a1108;
-      outline-offset: 2px;
-    }
-  
-    .blnd-price {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-  
-    .blnd-old {
-      font-size: 11px;
-      color: #bbb;
-      text-decoration: line-through;
-    }
-  
-    .blnd-new {
-      font-size: 15px;
-      font-weight: 500;
-      color: #1a1108;
-    }
-  
-    .blnd-btn {
-      background: #1a1108;
-      color: #c9a97a;
-      border: none;
-      border-radius: 30px;
-      font-size: 11px;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-      padding: 8px 16px;
-      cursor: pointer;
-    }
-  /* ══════════════════════════
-    LAUNCH SECTION
-  ══════════════════════════ */
-
-  .launch {
-    background: var(--bg-deep);
-    padding: 7% 5%;
-    text-align: center; position: relative; overflow: hidden;
-    border-top: .5px solid var(--border-blush);
+    color: var(--white); text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 400;
+    font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
   }
-  .launch-art {
-    position: absolute;
-    inset: 0;
-    background-image: url('ln1.png');
-    background-size: cover;
-    background-size: 110% 115%;
-    background-position: center;
-    background-repeat: no-repeat;
-    mix-blend-mode: screen;
-    filter: invert(1) sepia(1) saturate(6) hue-rotate(310deg) brightness(0.75);
-    opacity: 0.5;
-    pointer-events: none;
-    z-index: 0;
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+    background: var(--orange); transition: width 0.3s;
   }
-  .launch::before {
-    content: ''; position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 100%, rgba(140,74,32,.3) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(212,137,106,.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 1;  /* ← add this */
+  .nav-links a:hover { color: var(--orange); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--orange); color: var(--black) !important;
+    padding: 10px 24px; font-weight: 700 !important;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
   }
-  .launch-eyebrow {
-    font-family: var(--font-body);
-    font-size: clamp(.52rem, .9vw, .6rem); letter-spacing: .4em; text-transform: uppercase;
-    color: var(--blush); margin-bottom: 2%; position: relative; font-weight: 500; position: relative; z-index: 2;
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--orange-bright) !important; }
+
+  /* ─── HERO ─── */
+  #home {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--black) 0%, #1a0800 50%, var(--black) 100%);
+    display: flex; align-items: center; position: relative; overflow: hidden;
+    padding-top: 72px;
   }
-  .launch-title {
-    font-family: var(--font-display);
-    font-size: clamp(2.8rem, 6.5vw, 6rem); font-weight: 400;
-    line-height: 1.05; color: var(--text-cream);
-    margin-bottom: 1.5%; position: relative; position: relative; z-index: 2;
-  }
-  .launch-title em { font-style: italic; color: var(--blush-light); font-family: var(--font-serif); font-weight: 200; }
-  .launch-sub {
-    font-family: var(--font-body);
-    font-size: clamp(.68rem, 1.15vw, .82rem); color: var(--text-muted);
-    margin-bottom: 3%; position: relative; font-weight: 300; line-height: 1.9; position: relative; z-index: 2;
-  }
-  .email-form {
-    display: inline-flex;
-    border: .5px solid rgba(212,137,106,.4);
-    position: relative; z-index: 1;
-    box-shadow: 0 0 40px rgba(212,137,106,.08);
-  }
-  .email-input {
-    background: rgba(255,255,255,.03); border: none; outline: none;
-    padding: 1.2% 2.5%;
-    font-family: var(--font-body); font-size: clamp(.65rem, 1vw, .75rem);
-    color: var(--text-cream); width: 22vw; min-width: 200px; font-weight: 300;
-  }
-  .email-input::placeholder { color: rgba(139,106,74,.5); }
-  .email-btn {
-    background: linear-gradient(135deg, var(--blush), var(--brown-glow));
-    color: #fff; border: none; padding: 1.2% 2.5%;
-    font-family: var(--font-body); font-size: clamp(.58rem, 1vw, .66rem);
-    letter-spacing: .22em; text-transform: uppercase; font-weight: 600;
-    cursor: pointer; transition: all .3s;
-  }
-  .email-btn:hover {
-    background: linear-gradient(135deg, var(--blush-light), var(--blush));
-  }
-  .contact-button-wrap{
-      margin-top:40px;
-      text-align:center;
-  }.contact-btn{
-    
-      font-family: var(--font-display);
-      font-size:20px;
-      font-weight:400;
-      letter-spacing:.02em;
-      text-transform:none;
-      opacity: 2;
-      
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-
-      padding:18px 42px;
-
-      border-radius:999px;
-
-      text-decoration:none;
-
-      background:linear-gradient(
-          135deg,
-          var(--blnd-gold-light),
-          var(--blnd-gold)
-      );
-
-      color:#fff;
-
-      font-size:12px;
-      font-weight:700;
-      letter-spacing:.25em;
-      text-transform:uppercase;
-
-      border:none;
-      box-shadow:none;
-
-      transition:.35s ease;
-  }
-  .contact-btn:hover{
-      transform:translateY(-3px);
-      box-shadow:0 18px 40px rgba(216,162,76,.25);
-  }
-
-  /* ══════════════════════════
-    FOOTER
-  ══════════════════════════ */
-  footer {
-    background: var(--bg-dark);
-    border-top: .5px solid var(--border-blush);
-    padding: 2.8% 6% 1.8%;
-  }
-
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 1.8%;
-    border-bottom: .5px solid var(--border-faint);
-    gap: 2rem;
-  }
-
-  .footer-left .f-logo {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.3rem;
-    font-weight: 900;
-    letter-spacing: -1.5px;
-    text-transform: uppercase;
-    display: inline-block;
-    transform: scaleX(1.3);
-    transform-origin: left center;
-    background: linear-gradient(180deg, #f4cf85 0%, #d8a24c 55%, #b87a2e 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-decoration: none;
-  }
-
-  .footer-left .f-tag {
-    display: block;
-    margin-top: .5rem;
-    font-family: var(--font-body);
-    font-size: clamp(.44rem, .75vw, .52rem);
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: rgba(139,106,74,.4);
-    font-weight: 300;
-  }
-
-  .footer-right {
-    display: flex;
-    gap: 3rem;
-    list-style: none;
-  }
-
-  .footer-right li a {
-    font-family: var(--font-body);
-    font-size: clamp(.48rem, .8vw, .58rem);
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color .3s;
-    font-weight: 400;
-  }
-
-  .footer-right li a:hover { color: var(--blush-light); }
-
-  .footer-bottom-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1.2%;
-  }
-
-  .footer-copy {
-    font-family: var(--font-body);
-    font-size: clamp(.42rem, .68vw, .5rem);
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: rgba(139,106,74,.28);
-    font-weight: 300;
-  }
-.blnd-card.is-open {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 40px rgba(0,0,0,.15);
-}
-
-.blnd-card.is-open .blnd-panel {
-  bottom: 0;
-}
-  @media (hover: hover) and (pointer: fine) {
-
-    .blnd-card {
-  background: #f0ece6;
-  border-radius: 6px;
-  overflow: hidden;
-
-  transition:
-    transform .35s cubic-bezier(.22,1,.36,1),
-    box-shadow .35s ease;
-}
-  .blnd-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 18px 40px rgba(0,0,0,.15);
-  }
-
-  .blnd-card:hover .blnd-panel {
-    bottom: 0;
-  }
-
-}
-  @media (max-width: 768px) {
-      .products-grid {
-      grid-template-columns: 1fr;
-      gap: 12px;
-      padding: 12px;
-    }
-
-    .blnd-img {
-      height: 65vw;
-    }
-
-    .blnd-card {
-      border-radius: 12px;
-    }
-
-    .blnd-card:hover {
-      transform: none;
-      box-shadow: none;
-    }
-    footer {
-      padding: 28px 22px 18px;
-      text-align: center;
-    }
-
-    .footer-inner {
-      align-items: center;
-      gap: 20px;
-      padding-bottom: 22px;
-    }
-
-    .footer-left .f-logo {
-      font-size: 1.5rem;
-      transform: scaleX(1.18);
-      transform-origin: center;
-    }
-
-    .footer-left .f-tag {
-      font-size: 8px;
-      letter-spacing: .18em;
-      line-height: 1.6;
-      max-width: 240px;
-    }
-
-    .footer-right {
-      width: 100%;
-      justify-content: center;
-      gap: 14px 22px;
-      flex-wrap: wrap;
-    }
-
-    .footer-right li a {
-      font-size: 8px;
-      letter-spacing: .18em;
-    }
-
-    .footer-bottom-bar {
-      padding-top: 16px;
-      gap: 8px;
-    }
-
-    .footer-copy {
-      font-size: 7px;
-      letter-spacing: .14em;
-      line-height: 1.6;
-    }
-  }
-  /* ══════════════════════════
-    ANIMATIONS
-  ══════════════════════════ */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-  @keyframes scanline {
-    0%   { left: -100%; }
-    100% { left: 100%; }
-  }
-
-  /* ══════════════════════════
-    TABLET
-  ══════════════════════════ */
-  @media (max-width: 1024px) and (min-width: 769px) {
-    .hero-video-content { max-width: 70%; }
-    .split-video { grid-template-columns: 45% 55%; }
-    .features-dark { grid-template-columns: repeat(2, 50%); }
-    .feature-card-dark:nth-child(2) { border-right: none; }
-    .feature-card-dark:nth-child(1),
-    .feature-card-dark:nth-child(2) { border-bottom: .5px solid var(--border-blush); }
-    .feature-card-dark:nth-child(3),
-    .feature-card-dark:nth-child(4) { border-bottom: none; }
-    .feature-card-dark:nth-child(4) { border-right: none; }
-    .collection-sub { max-width: 70%; }
-  }
-
-  /* ══════════════════════════
-    MOBILE
-  ══════════════════════════ */
-  @media (max-width: 768px) {
-    nav { padding: 3.5% 5%; background: rgba(13,7,3,.97); backdrop-filter: blur(12px); }
-    nav::after { left: 5%; right: 5%; }
-    .nav-logo { font-size: clamp(1.5rem, 6vw, 1.8rem); }
-    .nav-links { display: none; }
-    .nav-cta { padding: 1.5% 4%; font-size: clamp(.58rem, 2.5vw, .64rem); }
-.hero-video {
-  height: 100svh;
-  display: grid;
-  place-items: center;
-}
-
-.hero-video-content {
+  .hero-bg-video {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  filter: brightness(0.55) contrast(1.08);
+}
+
+.hero-video-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(10,10,10,0.82) 0%,
+      rgba(10,10,10,0.50) 52%,
+      rgba(10,10,10,0.72) 100%
+    ),
+    rgba(255,107,0,0.08);
+}
+
+.hero-grid-overlay {
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-orange-bar {
   z-index: 3;
-
-  width: 100% !important;
-  max-width: none !important;
-  padding: 0 7% !important;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
 }
 
-.hero-title {
-  font-size: clamp(3rem, 13vw, 5rem);
-  width: 100%;
-  text-align: center;
+.hero-content,
+.hero-stats {
+  z-index: 4;
 }
-
-.hero-subtitle,
-.viewer-count {
-  width: 100%;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.hero-actions {
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 7%;
-}
-    @media (max-width: 768px){
-
-    .contact-btn{
-      width:auto;
-      min-width:240px;
-
-      background:linear-gradient(
-        135deg,
-        #f3c774 0%,
-        #d8a24c 100%
-      );
-
-      color:#fff;
-
-      box-shadow:
-        0 10px 30px rgba(216,162,76,.28);
-
-      position:relative;
-      z-index:3;
-    }
-
+  .hero-bg-img {
+    position: absolute; inset: 0;
+    background-image: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80');
+    background-size: cover; background-position: center;
+    opacity: 0.12;
   }
-    .btn-primary { width: 78%; text-align: center; padding: 4% 5%; font-size: clamp(.62rem, 3vw, .7rem); }
-    .btn-ghost { justify-content: center; }
-    .hero-bottom-row { flex-direction: column; gap: 2%; align-items: center; bottom: 3%; }
-    .hero-badges-row { justify-content: center; flex-wrap: wrap; gap: 1.5%; }
-    .badge { padding: 1.5% 2.5%; }
-    .scroll-hint { display: none; }
+  .hero-grid-overlay {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,107,0,0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,107,0,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-orange-bar {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 6px; background: var(--orange);
+    box-shadow: 0 0 30px var(--orange), 0 0 60px rgba(255,107,0,0.5);
+  }
+  .hero-content { position: relative; z-index: 2; padding: 0 80px; max-width: 820px; }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem;
+    letter-spacing: 6px; text-transform: uppercase; color: var(--orange);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 2px; background: var(--orange); }
+  h1.hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.95; letter-spacing: 2px;
+    color: var(--white);
+    text-shadow: 0 0 40px rgba(255,107,0,0.2);
+  }
+  h1.hero-title em { color: var(--orange); font-style: normal; }
+  .hero-sub {
+    margin-top: 28px; font-size: 1.1rem; font-weight: 300;
+    color: rgba(245,245,245,0.8); line-height: 1.7; max-width: 520px;
+  }
+  .hero-cta-group { margin-top: 44px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--orange); color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 40px; text-decoration: none; display: inline-block;
+    clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { background: var(--orange-bright); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,0,0.4); }
+  .btn-outline {
+    border: 1px solid rgba(255,107,0,0.6); color: var(--orange);
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 600;
+    font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+    padding: 16px 40px; text-decoration: none; display: inline-block;
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { background: rgba(255,107,0,0.1); border-color: var(--orange); }
+  .hero-stats {
+    position: absolute; bottom: 60px; right: 80px;
+    display: flex; gap: 48px; z-index: 2;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--orange); line-height: 1; }
+  .stat-label { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-top: 4px; }
 
-    .stats-strip { grid-template-columns: 100%; margin: 0; }
-    .stat-item { padding: 4.5% 6%; border-bottom: .5px solid var(--border-blush); }
-    .stat-item + .stat-item::before { display: none; }
-    .stat-item:last-child { border-bottom: none; }
+  /* ─── SECTION COMMONS ─── */
+  section { padding: 100px 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem;
+    letter-spacing: 6px; text-transform: uppercase; color: var(--orange);
+    margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::before { content: ''; display: inline-block; width: 32px; height: 2px; background: var(--orange); }
+  h2.section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 2px; line-height: 1;
+    color: var(--white); margin-bottom: 20px;
+  }
+  h2.section-title em { color: var(--orange); font-style: normal; }
+  .section-lead { color: rgba(245,245,245,0.7); line-height: 1.8; max-width: 640px; font-size: 1.05rem; }
 
-    .split-video {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-    }
+  /* ─── ABOUT / GYM ─── */
+  #about { background: var(--dark); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+  .about-img-wrapper { position: relative; }
+  .about-img {
+    width: 100%; aspect-ratio: 4/5; object-fit: cover;
+    border: 1px solid rgba(255,107,0,0.2);
+    filter: grayscale(20%) contrast(1.1);
+  }
+  .about-img-accent {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 120px; height: 120px;
+    background: var(--orange);
+    z-index: -1;
+    clip-path: polygon(20px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 20px);
+  }
+  .about-tag {
+    position: absolute; top: 24px; left: -20px;
+    background: var(--orange); color: var(--black);
+    font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+    font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
+    padding: 8px 20px;
+  }
+  .about-text p { color: rgba(245,245,245,0.75); line-height: 1.8; margin-bottom: 20px; }
+  .hours-box {
+    margin-top: 32px; padding: 24px 28px;
+    border: 1px solid rgba(255,107,0,0.3);
+    background: rgba(255,107,0,0.04);
+  }
+  .hours-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; }
+  .hours-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.9rem; }
+  .hours-row:last-child { border: none; }
 
-    .split-video-panel {
-      height: 52vw;
-      min-height: 260px;
-    }
+  /* ─── FEATURES RIBBON ─── */
+  .features-ribbon {
+    background: var(--orange); padding: 0;
+    overflow: hidden;
+  }
+  .features-ribbon-inner {
+    display: flex; align-items: stretch;
+  }
+  .feature-pill {
+    flex: 1; padding: 32px 28px;
+    display: flex; align-items: center; gap: 16px;
+    border-right: 1px solid rgba(0,0,0,0.15);
+    transition: background 0.2s;
+  }
+  .feature-pill:last-child { border-right: none; }
+  .feature-pill:hover { background: rgba(0,0,0,0.1); }
+  .feature-icon { font-size: 1.8rem; }
+  .feature-pill-text strong { display: block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; text-transform: uppercase; color: var(--black); }
+  .feature-pill-text span { font-size: 0.8rem; color: rgba(0,0,0,0.65); }
 
-    .split-text-panel {
-      padding: 12% 8%;
-      text-align: left;
-    }
+  /* ─── SERVICES ─── */
+  #services { background: var(--black); }
+  .services-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; margin-bottom: 60px; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .service-card {
+    background: var(--dark2); padding: 36px 28px;
+    position: relative; overflow: hidden;
+    transition: all 0.3s; cursor: default;
+    border-bottom: 3px solid transparent;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--orange); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { background: var(--dark3); border-bottom-color: var(--orange); transform: translateY(-4px); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem;
+    color: rgba(255,107,0,0.1); line-height: 1; margin-bottom: 8px;
+    transition: color 0.3s;
+  }
+  .service-card:hover .service-num { color: rgba(255,107,0,0.2); }
+  .service-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 12px; }
+  .service-desc { font-size: 0.88rem; color: rgba(245,245,245,0.6); line-height: 1.7; }
+  .service-card .service-arrow {
+    position: absolute; bottom: 24px; right: 24px;
+    color: var(--orange); opacity: 0; transition: opacity 0.3s;
+    font-size: 1.2rem;
+  }
+  .service-card:hover .service-arrow { opacity: 1; }
 
-    .split-eyebrow {
-      margin-bottom: 12px;
-    }
+  /* ─── EQUIPMENT / BCA ─── */
+  #equipment { background: var(--dark); }
+  .equipment-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 60px; }
+  .equip-card {
+    background: var(--dark2); padding: 40px 36px;
+    border-left: 4px solid var(--orange); position: relative;
+  }
+  .equip-icon { font-size: 2.5rem; margin-bottom: 16px; }
+  .equip-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: 1px; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+  .equip-desc { color: rgba(245,245,245,0.7); line-height: 1.8; font-size: 0.93rem; }
 
-    .split-title {
-      font-size: clamp(2.2rem, 9vw, 3rem);
-      line-height: 1.05;
-      margin-bottom: 18px;
-    }
+  /* ─── TESTIMONIALS ─── */
+  #testimonials { background: linear-gradient(180deg, var(--black) 0%, #1a0800 50%, var(--black) 100%); }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 60px; }
+  .testimonial-card {
+    background: var(--dark2); padding: 36px 32px;
+    border: 1px solid rgba(255,107,0,0.1); position: relative;
+  }
+  .testimonial-card::before {
+    content: '"'; position: absolute; top: 20px; left: 28px;
+    font-size: 5rem; font-family: Georgia, serif; color: rgba(255,107,0,0.15); line-height: 1;
+  }
+  .testimonial-text { font-size: 0.95rem; color: rgba(245,245,245,0.8); line-height: 1.8; margin-bottom: 24px; font-style: italic; }
+  .testimonial-stars { color: var(--orange); font-size: 0.85rem; margin-bottom: 16px; }
+  .testimonial-author strong { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; color: var(--white); }
+  .testimonial-author span { display: block; font-size: 0.8rem; color: var(--gray); margin-top: 4px; }
 
-    .split-body {
-      max-width: 100%;
-      font-size: 0.92rem;
-      line-height: 1.9;
-    }
+  /* ─── TRAINERS ─── */
+  #trainers { background: var(--dark); }
+  .trainers-intro { max-width: 640px; margin-bottom: 60px; }
+  .trainers-img-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .trainer-card { position: relative; overflow: hidden; aspect-ratio: 3/4; }
+  .trainer-card img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(40%); transition: all 0.4s; }
+  .trainer-card:hover img { filter: grayscale(0%); transform: scale(1.05); }
+  .trainer-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(10,10,10,0.9));
+    padding: 32px 20px 20px;
+    transform: translateY(20px); transition: transform 0.3s;
+  }
+  .trainer-card:hover .trainer-overlay { transform: translateY(0); }
+  .trainer-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; color: var(--white); }
+  .trainer-role { font-size: 0.8rem; color: var(--orange); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
 
-    .split-detail {
-      margin-top: 28px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+  /* ─── CAFE / AMENITIES ─── */
+  #amenities { background: var(--black); }
+  .amenities-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 60px; align-items: center; margin-top: 60px; }
+  .amenities-img { width: 100%; aspect-ratio: 16/10; object-fit: cover; border: 1px solid rgba(255,107,0,0.2); }
+  .amenity-item { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 32px; }
+  .amenity-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: rgba(255,107,0,0.1); border: 1px solid rgba(255,107,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .amenity-info strong { display: block; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; letter-spacing: 1px; color: var(--white); margin-bottom: 6px; }
+  .amenity-info p { font-size: 0.88rem; color: rgba(245,245,245,0.65); line-height: 1.7; }
 
-    .split-detail-item {
-      border: 1px solid rgba(212,137,106,.25);
-      padding: 8px 12px;
-      font-size: 0.65rem;
-    }
+  /* ─── CAREERS ─── */
+  #careers { background: var(--dark); }
+  .careers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; align-items: start; }
+  .career-checks { list-style: none; margin: 24px 0; }
+  .career-checks li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 0.95rem; color: rgba(245,245,245,0.8); display: flex; gap: 12px; align-items: center; }
+  .career-checks li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+  .careers-perks { display: flex; flex-direction: column; gap: 20px; }
+  .perk { background: var(--dark2); padding: 28px 24px; border-left: 3px solid var(--orange); }
+  .perk strong { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 1px; color: var(--orange); display: block; margin-bottom: 8px; }
+  .perk p { font-size: 0.88rem; color: rgba(245,245,245,0.7); line-height: 1.7; }
 
-    .split-detail-item::before {
-      display: none;
-    }
+  /* ─── CONTACT ─── */
+  #contact { background: var(--black); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 60px; }
 
-    
+  .contact-block { margin-bottom: 36px; }
+  .contact-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+  .contact-value { font-size: 1.05rem; color: var(--white); line-height: 1.7; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 8px; }
+  .form-field label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); }
+  .form-field input, .form-field textarea, .form-field select {
+    background: var(--dark2); border: 1px solid rgba(255,255,255,0.1);
+    color: var(--white); padding: 14px 16px; font-family: 'Barlow', sans-serif; font-size: 0.95rem;
+    outline: none; transition: border-color 0.2s; resize: none;
+  }
+  .form-field input:focus, .form-field textarea:focus, .form-field select:focus { border-color: var(--orange); }
+  .form-field textarea { min-height: 120px; }
+  .form-submit { margin-top: 8px; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark); border-top: 1px solid rgba(255,107,0,0.2);
+    padding: 60px 0 32px;
+  }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand img { height: 60px; margin-bottom: 16px; filter: drop-shadow(0 0 6px rgba(255,107,0,0.4)); }
+  .footer-brand p { font-size: 0.88rem; color: rgba(245,245,245,0.55); line-height: 1.8; }
+  .footer-col h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 12px; }
+  .footer-col ul li a { color: rgba(245,245,245,0.55); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--orange); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 0.8rem; color: rgba(245,245,245,0.35); }
+  .footer-tagline { font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 3px; color: var(--orange); }
+
+  /* ─── ORANGE DIVIDER ─── */
+  .divider { height: 4px; background: linear-gradient(90deg, var(--orange), var(--orange-dim), transparent); }
+
+  /* ─── SCROLL INDICATOR ─── */
+  .scroll-to-top {
+    position: fixed; bottom: 32px; right: 32px; z-index: 999;
+    width: 48px; height: 48px; background: var(--orange); color: var(--black);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; text-decoration: none; cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all 0.25s;
+  }
+  .scroll-to-top:hover { background: var(--orange-bright); transform: translateY(-3px); }
+
+  /* ─── MOBILE HAMBURGER ─── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+  .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); transition: all 0.3s; }
+
+@media (max-width: 900px) {
+  nav {
+    padding: 0 24px;
   }
 
-    .first-india { margin: 5% 5%; padding: 6% 5%; grid-template-columns: 100%; gap: 5%; }
-    .fi-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
-    .fi-desc { max-width: 100%; }
-    .fi-badge { margin: 0 auto; width: 26vw; height: 26vw; min-width: 90px; min-height: 90px; }
-
-    .features-dark {
-      margin: 0 5% 1%;
-      grid-template-columns: repeat(2, 50%);
-    }
-    .feature-card-dark {
-      padding: 6.5% 4.5%;
-      border-right: .5px solid var(--border-blush);
-      border-bottom: .5px solid var(--border-blush);
-    }
-    .feature-card-dark:nth-child(2n) { border-right: none; }
-    .feature-card-dark:nth-last-child(-n+2) { border-bottom: none; }
-
-    .collection-section { padding: 11% 5%; }
-    .collection-title { font-size: clamp(2rem, 7.5vw, 2.6rem); }
-    .collection-sub { font-size: clamp(.66rem, 2.6vw, .76rem); max-width: 90%; }
-    .product-grid { grid-template-columns: 100%; gap: 1px; }
-    .product-card { padding: 7% 6% 5%; }
-    .product-visual { height: 36vw; min-height: 120px; max-height: 200px; }
-
-    .launch { padding: 13% 5%; }
-    .launch-title { font-size: clamp(2.5rem, 10vw, 3.5rem); }
-    .email-form { flex-direction: column; width: 86%; }
-    .email-input { width: 100%; text-align: center; padding: 4.5% 5%; border-bottom: .5px solid rgba(212,137,106,.2); min-width: unset; }
-    .email-btn { width: 100%; padding: 4.5% 5%; }
-
-    footer { flex-direction: column; gap: 2.5%; text-align: center; padding: 1% 5%; }
-    .social-links { justify-content: center; }
-
-
-  @media (max-width: 420px) {
-    .hero-title { font-size: clamp(2.6rem, 13vw, 3.2rem); }
-    .features-dark { grid-template-columns: 100%; }
-    .feature-card-dark { border-right: none !important; border-bottom: .5px solid var(--border-blush) !important; }
-    .feature-card-dark:last-child { border-bottom: none !important; }
-    .btn-primary { width: 90%; }
-    .email-form { width: 95%; }
-  }
-/* FORCE HERO CONTENT TO THE TRUE CENTER — MOBILE ONLY */
-@media (max-width: 768px) {
-  .hero-video {
-    justify-content: center;
+  .nav-links {
+    display: none;
   }
 
-  .hero-video-content {
-    width: 100%;
-    max-width: none;
-    margin: 0 auto;
-    padding: 0 7%;
-    text-align: center;
-
+  .hamburger {
     display: flex;
+  }
+
+  .container {
+    padding: 0 24px;
+  }
+
+  /* No video / arrow on phones */
+  .hero-bg-video,
+  .hero-video-shade,
+  .scroll-to-top {
+    display: none !important;
+  }
+
+  /* Shorter hero */
+  #home {
+    min-height: auto;
+    padding: 115px 0 52px;
+    background: linear-gradient(135deg, #0A0A0A 0%, #1a0800 55%, #0A0A0A 100%);
+  }
+
+  .hero-content {
+    padding: 0 24px;
+  }
+
+  .hero-stats {
+    display: none;
+  }
+
+  h1.hero-title {
+    font-size: clamp(2.9rem, 13vw, 3.5rem);
+  }
+
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 0.95rem;
+  }
+
+  .hero-cta-group {
+    margin-top: 28px;
+  }
+
+  .about-grid,
+  .services-intro,
+  .contact-grid,
+  .careers-grid,
+  .amenities-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .trainers-img-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .equipment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features-ribbon-inner {
+    flex-wrap: wrap;
+  }
+
+  .feature-pill {
+    flex: 1 0 50%;
+    border-right: none;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+  }
+
+  /* Contact form: one field per row on phones */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Removes unnecessary form/footer gap */
+  #contact {
+    padding: 58px 0 28px;
+  }
+
+  #contact .contact-grid {
+    margin-top: 34px;
+  }
+
+  /* Footer becomes clean single-column layout */
+  footer {
+    padding: 36px 0 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 28px;
+  }
+
+  .footer-brand img {
+    max-width: 180px;
+    height: auto;
+  }
+
+  .footer-bottom {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    gap: 10px;
   }
 
-  .hero-title,
-  .hero-subtitle,
-  .viewer-count {
-    width: 100%;
-    text-align: center;
+}
+/* Better mobile services layout */
+@media (max-width: 900px) {
+  #services {
+    padding: 64px 0;
   }
 
-  .hero-subtitle,
-  .viewer-count {
-    margin-left: auto;
-    margin-right: auto;
+  .services-intro {
+    margin-bottom: 32px;
   }
 
-  .hero-actions {
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .service-card {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    padding: 22px 20px;
+    min-height: 0;
+  }
+
+  /* Number stays on the left */
+  .service-num {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
+    font-size: 2.7rem;
+    line-height: 1;
+  }
+
+  /* Title sits beside the number */
+  .service-name {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.05;
+  }
+
+  /* Description uses the full width below */
+  .service-desc {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 16px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .service-card .service-arrow {
+    display: none;
   }
 }
-  </style>
-  </head>
-  <script>
-  fetch("https://script.google.com/macros/s/AKfycbyz7tzMm0Z-Nf26TquXiYEFIQpM4FgIwQg4bmJQlmPh1ValVOKEPgkOHWrgd5N_O9eF/exec", {
-    method: "POST",
-    body: JSON.stringify({ type: "pageview" })
-  })
-  .then(res => res.json())
-  .then(data => {
-    const el = document.getElementById("viewerNumber");
-    if (el && typeof data.count === "number") {
-      el.textContent = data.count.toLocaleString("en-IN");
+/* Keep service cards highlighted on mobile */
+@media (max-width: 900px) {
+  .service-card {
+    background: var(--dark3);
+    border-bottom-color: var(--orange);
+    transform: none;
+  }
+
+  .service-card::before {
+    transform: scaleX(1);
+  }
+
+  .service-num {
+    color: rgba(255, 107, 0, 0.24);
+  }
+}
+/* Clean full-width trainer cards on phones */
+@media (max-width: 900px) {
+  .trainers-img-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .trainer-card {
+    aspect-ratio: 16 / 9;
+  }
+
+  .trainer-overlay {
+    transform: translateY(0);
+    padding: 24px 20px 18px;
+    background: linear-gradient(
+      transparent 15%,
+      rgba(10, 10, 10, 0.92) 100%
+    );
+  }
+
+  .trainer-card img {
+    filter: grayscale(15%);
+  }
+
+  .trainer-name {
+    font-size: 1.35rem;
+  }
+
+  .trainer-role {
+    font-size: 0.78rem;
+    line-height: 1.45;
+  }
+}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    /* ── Section wrapper ── */
+    .gtf-locations {
+      background: #111111;
+      color: #e8e8e8;
+      font-family: 'Barlow', sans-serif;
+      padding: 64px 48px;
     }
-  })
-  .catch(err => console.log("View count error:", err));
-  </script>
-
-  <body>
-
-
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <!-- ── NAV ── -->
-  <nav id="mainNav">
-    <a class="nav-logo" href="file:///C:/Users/Renu/Downloads/BLND/index.html">BLND</a>
-    <ul class="nav-links">
-      <li><a href="#brushes">Collection</a></li>
-      <li><a href="#collection">See more</a></li>
-      <li><a href="#marquee3">Connect with us</a></li>
-    </ul>
-    <a href="#brushes" class="nav-cta" onclick="openPopup()">Join the Waitlist</a>
-  </nav>
-
-  <!-- ══════════════════════════
-      VIDEO HERO
-  ══════════════════════════ -->
-  <section class="hero-video">
-    <!-- Animated gradient fallback shown behind the video -->
-    <div class="hero-video-fallback"></div>
-    <!-- Hero video — sits above fallback, below overlay -->
-    <video class="hero-video-bg" autoplay muted loop playsinline preload="auto"
-      src="Video Project 13.mp4"
-      type="video/mp4">
-    </video>
-    <div class="hero-overlay"></div>
-
-    <div class="hero-video-content">
-      
-      <h1 class="hero-title">Your brush.<br>Your ritual.<br><em>Your finish.</em></h1>
-      <p class="hero-subtitle">Blending shouldn't be complicated. BLND gives you two tools in one — designed for real girls, real routines, real results.</p>
-
-  <p class="viewer-count" id="viewerCount">
-    ✦ <span id="viewerNumber">...</span> people have already visited BLND — get your new brush now
-  </p>
-      <div class="hero-actions">
-        <a href="#brushes" class="btn-primary">Shop the Collection</a>
-        <a href="#collection" class="btn-ghost">See what's inside</a>
-      </div>
-    </div>
-
-    
-      
-        <span class="badge"></span>
-        <span class="badge"></span>
-        <span class="badge"></span>
-        <span class="badge"></span>
-      </div>
-      <div class="scroll-hint"><div class="scroll-line"></div>Discover the ritual</div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════
-      MARQUEE STRIP 1
-  ══════════════════════════ -->
-  <div class="marquee-strip">
-    <div class="marquee-track" id="marquee1">
-      <span class="marquee-item">Blend Like a Pro <span class="dot">✦</span></span>
-      <span class="marquee-item">India's First Dual-Sided Brush <span class="dot">✦</span></span>
-      <span class="marquee-item">100% Vegan &amp; Cruelty-Free <span class="dot">✦</span></span>
-      <span class="marquee-item">Two Sides, One You <span class="dot">✦</span></span>
-      <span class="marquee-item">Sculpt · Diffuse · Repeat <span class="dot">✦</span></span>
-      <span class="marquee-item">Made for Every Makeup Girl <span class="dot">✦</span></span>
-      <span class="marquee-item">Blend Like a Pro <span class="dot">✦</span></span>
-      <span class="marquee-item">India's First Dual-Sided Brush <span class="dot">✦</span></span>
-      <span class="marquee-item">100% Vegan &amp; Cruelty-Free <span class="dot">✦</span></span>
-      <span class="marquee-item">Two Sides, One You <span class="dot">✦</span></span>
-      <span class="marquee-item">Sculpt · Diffuse · Repeat <span class="dot">✦</span></span>
-      <span class="marquee-item">Made for Every Makeup Girl <span class="dot">✦</span></span>
-    </div>
-  </div>
-
-
-
-  <!-- ══════════════════════════
-      COLLECTION SECTION
-  ══════════════════════════ --><section class="section" id="brushes">
-    <p class="section-label">The BLND Collection</p>
-    <h2 class="section-title">Made for <em>Every Ritual</em></h2>
-
-    <div class="grid">
-
-  <div class="products-grid">
+ 
+    /* ── Header ── */
+    .gtf-locations__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      border-bottom: 1px solid #2a2a2a;
+      padding-bottom: 24px;
+    }
+    .gtf-locations__eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #ff6b00;
+      margin-bottom: 8px;
+    }
+    .gtf-locations__title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: #ffffff;
+    }
+    .gtf-locations__title span { color: #ff6b00; }
+    .gtf-locations__count {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 80px;
+      font-weight: 700;
+      color: #1e1e1e;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+ 
+    /* ── Layout ── */
+    .gtf-locations__body {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+ 
+    /* ── Location cards ── */
+    .gtf-locations__cards {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .gtf-loc-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-left: 3px solid transparent;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .gtf-loc-card:hover,
+    .gtf-loc-card.active {
+      border-left-color: #ff6b00;
+      background: #1f1f1f;
+    }
+    .gtf-loc-card__name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .gtf-loc-card.active .gtf-loc-card__name { color: #ff6b00; }
+    .gtf-loc-card__address {
+      font-size: 12px;
+      color: #888;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .gtf-loc-card__meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .gtf-loc-card__rating {
+      font-size: 11px;
+      font-weight: 600;
+      color: #ff6b00;
+    }
+    .gtf-loc-card__hours {
+      font-size: 11px;
+      color: #666;
+    }
+    .gtf-loc-card__gmaps {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ff6b00;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .gtf-loc-card__gmaps:hover { border-bottom-color: #ff6b00; }
+    .gtf-loc-card__gmaps-arrow { font-size: 10px; margin-left: 4px; }
+ 
+    /* ── Map iframe ── */
+    .gtf-locations__map {
+      position: relative;
+      width: 100%;
+      height: 440px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      overflow: hidden;
+    }
+    .gtf-locations__map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      transition: opacity 0.3s;
+    }
+    .gtf-locations__map-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(17,17,17,0.6));
+      height: 60px;
+      pointer-events: none;
+    }
+ 
+    @media (max-width: 768px) {
+      .gtf-locations { padding: 40px 20px; }
+      .gtf-locations__header { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .gtf-locations__count { font-size: 48px; }
+      .gtf-locations__body { grid-template-columns: 1fr; }
+      .gtf-locations__map { height: 300px; }
+      .gtf-locations__cards { flex-direction: row; overflow-x: auto; gap: 8px; }
+      .gtf-loc-card { min-width: 220px; }
+    }
   
-    <!-- Card 1 -->
-    <div class="blnd-card">
-      <div class="blnd-img">
-        <span class="blnd-badge">★ Bestseller</span>
-        <!-- your product image goes here -->
-        <img src="Top-down_overhead_flat-lay_of_a_202606232208.jpeg" alt="BLND Essential 5 Duo Set" style="height:100%; object-fit:cover;">
-        <div class="blnd-panel">
-          <p class="blnd-panel-tag">10 functions · 5 brushes</p>
-          <p class="blnd-panel-body">Five dual-ended brushes that do the job of ten. Designed for effortless blending, precision, and everyday ease — beauty, simplified the BLND way.</p>
-        </div>
-      </div>
-      <div class="blnd-info">
-        <p class="blnd-name">BLND Essential 5 Duo Set (10-in-1)</p>
-        <p class="blnd-sub">10 functions. 5 brushes. Endless possibilities.</p>
-        <div class="blnd-dots">
-          <div class="blnd-dot ring" style="background:#1a1108;"></div>
-          <div class="blnd-dot" style="background:#c9a97a;"></div>
-          <div class="blnd-dot" style="background:#ede8e2; outline:1px solid #ccc; outline-offset:2px;"></div>
-        </div>
-        <div class="blnd-row">
-          <div class="blnd-price">
-            <span class="blnd-old">₹1,290</span>
-            <span class="blnd-new">₹999</span>
-          </div>
-          <button class="notify-btn" onclick="openPopup()">
-    <span style="position:relative; z-index:1; display:flex; align-items:center; gap:6px;">
-      <i class="ti ti-bell" style="font-size:13px;"></i> Notify Me
-    </span>
-  </button>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Card 2 -->
-    <div class="blnd-card">
-      <div class="blnd-img">
-        <img src="A_dual-sided_BLND_makeup_brush_202606232208.jpeg" alt="BLND Flawless Base Duo" style="height:100%; object-fit:cover;">
-        <div class="blnd-panel">
-          <p class="blnd-panel-tag">Blend · Build · Perfect</p>
-          <p class="blnd-panel-body">Your foundation and concealer essentials for a smooth, natural, skin-like finish. Designed to blend seamlessly for streak-free application every time.</p>
-        </div>
-      </div>
-      <div class="blnd-info">
-        <p class="blnd-name">BLND Flawless Base Duo</p>
-        <p class="blnd-sub">Blend. Build. Perfect.</p>
-        <div class="blnd-dots">
-          <div class="blnd-dot ring" style="background:#1a1108;"></div>
-          <div class="blnd-dot" style="background:#c9a97a;"></div>
-        </div>
-        <div class="blnd-row">
-          <span class="blnd-new">₹849</span>
-          <button class="notify-btn" onclick="openPopup()">
-    <span style="position:relative; z-index:1; display:flex; align-items:center; gap:6px;">
-      <i class="ti ti-bell" style="font-size:13px;"></i> Notify Me
-    </span>
-  </button>
-        </div>
-      </div>
-    </div>
-  
-    <!-- Card 3 -->
-    <div class="blnd-card">
-      <div class="blnd-img">
-        <span class="blnd-badge">✦ New</span>
-        <img src="Extreme_macro_close-up_of_two_202606232208.jpeg" alt="BLND Sculpt & Glow Duo" style="height:100%; object-fit:cover;">
-        <div class="blnd-panel">
-          <p class="blnd-panel-tag">Shape · Flush · Glow</p>
-          <p class="blnd-panel-body">A perfectly paired contour and blush brush set that sculpts, defines, and adds a soft natural glow. Easy to use, beautifully effortless.</p>
-        </div>
-      </div>
-      <div class="blnd-info">
-        <p class="blnd-name">BLND Sculpt & Glow Duo</p>
-        <p class="blnd-sub">Shape. Flush. Glow.</p>
-        <div class="blnd-dots">
-          <div class="blnd-dot ring" style="background:#1a1108;"></div>
-        </div>
-        <div class="blnd-row">
-          <span class="blnd-new">₹699</span>
-          <button class="notify-btn" onclick="openPopup()">
-    <span style="position:relative; z-index:1; display:flex; align-items:center; gap:6px;">
-      <i class="ti ti-bell" style="font-size:13px;"></i> Notify Me
-    </span>
-  </button>
-        </div>
-      </div>
-    </div>
-  
-  </div>
-            
-          </div>
-        </div>
-      </div>
+</style>
+</head>
+<body>
 
-      <!-- Card 4 -->
-    
-  </section>
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <img src="l1-removebg-preview.png" alt="The Global Fitness Logo">
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">The Gym</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#testimonials">Client Feedback</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+    <li><a href="#careers">Careers</a></li>
+    <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
 
-  <!-- ── STATS ── -->
-  <div class="stats-strip">
-    <div class="stat-item">
-      <div class="stat-number"><center>First</center></div>
-      <div class="stat-label"><Center>India's First Dual-Sided Brush</Center></div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number"><center>100%</center></div>
-      <div class="stat-label"><center>Vegan &amp; Cruelty-Free</center></div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number"><center>2×</center></div>
-      <div class="stat-label"><center>The Power. Half the Kit.</center></div>
+<!-- HERO -->
+<section id="home">
+  <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata">
+  <source src="Video Project 17.mp4" type="video/mp4">
+</video>
+
+<div class="hero-video-shade"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-orange-bar"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"></div>
+    <h1 class="hero-title">We Help You<br>Achieve Your<br><em>Fitness Goals</em></h1>
+    <p class="hero-sub">State-of-the-art facility. Expert trainers. A community that pushes you further. Call us today and jumpstart your journey to fitness.</p>
+    <div class="hero-cta-group">
+      <a href="#contact" class="btn-primary">Start Your Journey</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
     </div>
   </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Services</div></div>
+    <div class="stat"><div class="stat-num">5AM</div><div class="stat-label">Open Daily</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Certified</div></div>
+  </div>
+</section>
 
+<!-- FEATURES RIBBON -->
+<div class="features-ribbon">
+  <div class="features-ribbon-inner">
+    <div class="feature-pill"><div class="feature-icon">🏋️</div><div class="feature-pill-text"><strong>State-of-the-Art Equipment</strong><span>Advanced biomechanics & cardio</span></div></div>
+    <div class="feature-pill"><div class="feature-icon">🔬</div><div class="feature-pill-text"><strong>BCA Analysis</strong><span>Full body composition tracking</span></div></div>
+    <div class="feature-pill"><div class="feature-icon">📱</div><div class="feature-pill-text"><strong>Digital Schedule Cards</strong><span>Access from anywhere, anytime</span></div></div>
+    <div class="feature-pill"><div class="feature-icon">🔒</div><div class="feature-pill-text"><strong>Fingerprint Access</strong><span>Hassle-free secure entry</span></div></div>
+  </div>
+</div>
 
-
-  <!-- ══════════════════════════
-      SPLIT: VIDEO + TEXT
-  ══════════════════════════ -->
-  <div class="split-video" id="collection">
-    <div class="split-video-panel">
-      <!-- Animated gradient fallback shown behind the video -->
-      <div class="split-vid-fallback"></div>
-      <!-- Split video — sits above fallback, below overlay -->
-      <video autoplay muted loop playsinline preload="auto"
-        src="Makeupdemo.mp4"
-        type="video/mp4">
-      </video>
-      <div class="split-vid-overlay"></div>
-    </div>
-
-    <div class="split-text-panel">
-      <div class="split-eyebrow">A First for India</div>
-      <h2 class="split-title">One brush<br>that <em>gets</em><br>you.</h2>
-      <p class="split-body">
-        Every girl deserves tools that match her pace. BLND is India's first dual-sided makeup brush — sculpt with one end, diffuse with the other. Less clutter on your vanity. More magic on your face.
-      </p>
-      <div class="split-detail">
-        <div class="split-detail-item">Sculpt</div>
-        <div class="split-detail-item">Diffuse</div>
-        <div class="split-detail-item">Blend</div>
+<!-- ABOUT / THE GYM -->
+<section id="about">
+  <div class="container">
+    <div class="section-eyebrow">The Gym</div>
+    <h2 class="section-title">More Than a Gym —<br>A <em>Lifestyle</em></h2>
+    <div class="about-grid">
+      <div class="about-img-wrapper">
+        <img class="about-img" src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800&q=80" alt="Global Fitness Gym Interior" loading="lazy">
+        <div class="about-tag">Est. New Delhi </div>
+        <div class="about-img-accent"></div>
+      </div>
+      <div class="about-text">
+        <p>The Global Fitness is located just steps away from your home or place of work, we are in <b>Vikaspuri, Shalimar Bagh, Kamla Nagar and Pitampura</b>. Our team includes trained, energetic and enthusiastic fitness professionals whose goal is to help you improve your health and fitness.</p>
+        <p>We provide a hygienic, safe and state-of-the-art facility for our members — whether they are just starting an exercise program or are at an advanced level. The Global Fitness offers Personal Training, Bodybuilding, Cardio Equipment, Free Weights, Strength Biomechanics and Group Fitness Classes.</p>
+        <p>Good health means a complete physical, mental, social and spiritual wellbeing. The only way to achieve a fit body and mind is to remain consistent with a healthy lifestyle.</p>
+        <p style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--orange);letter-spacing:3px;margin-top:8px;">Get In... Get Fit... Get Life…</p>
+        <div class="hours-box">
+          <div class="hours-title">Opening Hours</div>
+          <div class="hours-row"><span>Monday – Saturday</span><span style="color:var(--orange)">5:30 AM – 11:00 PM</span></div>
+          <div class="hours-row"><span>Sundays</span><span style="color:var(--orange)">9:00 AM – 9:00 PM</span></div>
+        </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- ══════════════════════════
-      MARQUEE STRIP 2 (light, reversed)
-  ══════════════════════════ -->
-  <div class="marquee-strip light reverse">
-    <div class="marquee-track" id="marquee2">
-      <span class="marquee-item">Your Vanity Deserves Better <span class="dot">✦</span></span>
-      <span class="marquee-item">Minimal Luxury <span class="dot">✦</span></span>
-      <span class="marquee-item">Good Skin Starts with Good Tools <span class="dot">✦</span></span>
-      <span class="marquee-item">Soft on Skin · Fierce in Finish <span class="dot">✦</span></span>
-      <span class="marquee-item">The Ritual Is the Product <span class="dot">✦</span></span>
-      <span class="marquee-item">Premium Synthetic Fibres <span class="dot">✦</span></span>
-      <span class="marquee-item">Your Vanity Deserves Better <span class="dot">✦</span></span>
-      <span class="marquee-item">Minimal Luxury <span class="dot">✦</span></span>
-      <span class="marquee-item">Good Skin Starts with Good Tools <span class="dot">✦</span></span>
-      <span class="marquee-item">Soft on Skin · Fierce in Finish <span class="dot">✦</span></span>
-      <span class="marquee-item">The Ritual Is the Product <span class="dot">✦</span></span>
-      <span class="marquee-item">Premium Synthetic Fibres <span class="dot">✦</span></span>
-    </div>
-  </div>
+<div class="divider"></div>
 
-  <!-- ── FIRST IN INDIA ── -->
-  <section class="first-india">
+
+
+<section class="gtf-locations" id="location">
+ 
+  <div class="gtf-locations__header">
     <div>
-      <div class="fi-eyebrow">Why BLND Is Different</div>
-      <h2 class="fi-title">Two intentions.<br><em>One tool.</em></h2>
-      <p class="fi-desc">No more switching brushes mid-routine. No more cluttering your vanity with tools that only do one thing. BLND brings together precision sculpting and seamless diffusing in a single, beautifully weighted brush — minimal in design, maximal in feeling. Because your morning routine should feel like self-care, not a chore.
-  </p>
+      <p class="gtf-locations__eyebrow">New Delhi</p>
+      <h2 class="gtf-locations__title">Find Your <span>GTF</span></h2>
     </div>
-    <div class="fi-badge">
-      <div class="fi-badge-num">FIRST<br>IN<br>INDIA<br>✦<br>DUAL<br>SIDED</div>
-    </div>
-  </section>
-
-  <!-- ── FEATURES ── -->
-  <section class="features-dark">
-    <div class="feature-card-dark">
-      <div class="feature-icon-line"></div>
-      <div class="feature-title-dark"><b>Dual-Sided Magic</b></Dual-Sided></div>
-      <p class="feature-text-dark">Two bristle heads in one handle — because your kit should work as hard as you do, without taking up your whole bathroom shelf.</p>
-    </div>
-    <div class="feature-card-dark">
-      <div class="feature-icon-line"></div>
-      <div class="feature-title-dark"><b>Feels Like a Cloud</b></div>
-      <p class="feature-text-dark">Premium vegan fibres that are ultra-soft on skin. No tugging, no shedding — just the kind of application that makes you pause and say "wow."</p>
-    </div>
-    <div class="feature-card-dark">
-      <div class="feature-icon-line"></div>
-      <div class="feature-title-dark"><b>Designed to Love</b></div>
-      <p class="feature-text-dark">A weighted handle that sits perfectly in your grip. When a brush feels this good to hold, your whole routine shifts. It becomes a ritual.</p>
-    </div>
-    <div class="feature-card-dark">
-      <div class="feature-icon-line"></div>
-      <div class="feature-title-dark"><b>For You, Always</b></div>
-      <p class="feature-text-dark">Whether you're a pro MUA or learning as you go, BLND meets you exactly where you are. Pro quality. Everyday confidence.</p>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════
-      MARQUEE STRIP 3
-  ══════════════════════════ -->
-  <div class="marquee-strip">
-    <div class="marquee-track" id="marquee3">
-      <span class="marquee-item">Launching in 30 Days <span class="dot">✦</span></span>
-      <span class="marquee-item">Be First on the List <span class="dot">✦</span></span>
-      <span class="marquee-item">Available on Instagram · Amazon India · BLND.online <span class="dot">✦</span></span>
-      <span class="marquee-item">Your Glow-Up Starts Here <span class="dot">✦</span></span>
-      <span class="marquee-item">Join the Waitlist Today <span class="dot">✦</span></span>
-      <span class="marquee-item">Launching in 30 Days <span class="dot">✦</span></span>
-      <span class="marquee-item">Be First on the List <span class="dot">✦</span></span>
-      <span class="marquee-item">Available on Instagram · Amazon India · BLND.online <span class="dot">✦</span></span>
-      <span class="marquee-item">Your Glow-Up Starts Here <span class="dot">✦</span></span>
-      <span class="marquee-item">Join the Waitlist Today <span class="dot">✦</span></span>
-    </div>
+    <div class="gtf-locations__count">04</div>
   </div>
-
-  <!-- ── LAUNCH ── -->
-  <section class="launch" id="notify">
-    <div class="launch-art"></div>
-    <div class="launch-eyebrow">Dropping in very soon!</div>
-    <h2 class="launch-title">Your glow-up<br>starts <em>here.</em></h2>
-    <p class="launch-sub">For business opportunities, collaborations, ideas, or any other inquiries, we'd love to hear from you.<br> Simply click the button below and send us an email—we'll get back to you as soon as possible.
-  </p>
-      <button class="contact-btn"  onclick="window.location.href='mailto:blndhq111@gmail.com?subject=BLND Inquiry'">Send an Inquiry</button>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ── -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-left">
-        <a href="#" class="f-logo">BLND</a>
-        <span class="f-tag">Made for the girl who knows what she wants.</span>
+ 
+  <div class="gtf-locations__body">
+ 
+    <!-- Cards -->
+    <div class="gtf-locations__cards" id="gtf-cards">
+ 
+      
+      <div class="gtf-loc-card active"
+     data-lat="28.6317"
+     data-lng="77.07252"
+     data-zoom="15"
+     onclick="switchMap(this)">
+        <div class="gtf-loc-card__name">Vikaspuri</div>
+        <div class="gtf-loc-card__address">C-242, Shaheed Rajguru Marg, Block C</div>
+        <div class="gtf-loc-card__meta">
+          <span class="gtf-loc-card__rating">★ 4.3 · 174 reviews</span>
+          <span class="gtf-loc-card__hours">6 AM – 11 PM</span>
+        </div>
+        <a class="gtf-loc-card__gmaps" href="https://maps.google.com/?cid=17109568557195499049" target="_blank" rel="noopener">Open in Maps <span class="gtf-loc-card__gmaps-arrow">↗</span></a>
       </div>
-      <ul class="footer-right">
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Amazon</a></li>
-        <li><a href="mailto:blndhq111@gmail.com">Contact</a></li>
-      </ul>
+ 
+      <div class="gtf-loc-card"
+     data-lat="28.706737"
+     data-lng="77.16286"
+     data-zoom="15"
+     onclick="switchMap(this)">
+      <div class="gtf-loc-card__name">Shalimar Bagh</div>
+        <div class="gtf-loc-card__address">Vardhaman Prime Plaza, 2nd &amp; 3rd Floor, West Shalimar Bagh</div>
+        <div class="gtf-loc-card__meta">
+          <span class="gtf-loc-card__rating">★ 4.0 · 224 reviews</span>
+          <span class="gtf-loc-card__hours">5:30 AM – 10 PM</span>
+        </div>
+        <a class="gtf-loc-card__gmaps" href="https://maps.google.com/?cid=461081329108793875" target="_blank" rel="noopener">Open in Maps <span class="gtf-loc-card__gmaps-arrow">↗</span></a>
+      </div>
+ 
+      <div class="gtf-loc-card"
+     data-lat="28.679456"
+     data-lng="77.20839"
+     data-zoom="15"
+     onclick="switchMap(this)">
+      <div class="gtf-loc-card__name">Kamla Nagar</div>
+        <div class="gtf-loc-card__address">29 UA, Jawahar Nagar–Malka Ganj Rd, above Subway</div>
+        <div class="gtf-loc-card__meta">
+          <span class="gtf-loc-card__rating">★ 4.5 · 31 reviews</span>
+          <span class="gtf-loc-card__hours">5:30 AM – 11 PM</span>
+        </div>
+        <a class="gtf-loc-card__gmaps" href="https://maps.google.com/?cid=6934893148008678507" target="_blank" rel="noopener">Open in Maps <span class="gtf-loc-card__gmaps-arrow">↗</span></a>
+      </div>
+ 
+      <div class="gtf-loc-card"
+     data-lat="28.695169"
+     data-lng="77.10952"
+     data-zoom="15"
+     onclick="switchMap(this)">
+      <div class="gtf-loc-card__name">Pitampura</div>
+        <div class="gtf-loc-card__address">B-101, Service Rd, Pushpanjali Enclave</div>
+        <div class="gtf-loc-card__meta">
+          <span class="gtf-loc-card__rating">★ 4.7 · 64 reviews</span>
+          <span class="gtf-loc-card__hours">5:30 AM – 11 PM</span>
+        </div>
+        <a class="gtf-loc-card__gmaps" href="https://maps.google.com/?cid=5257019197414358932" target="_blank" rel="noopener">Open in Maps <span class="gtf-loc-card__gmaps-arrow">↗</span></a>
+      </div>
+ 
+    </div><!-- /cards -->
+ 
+    <!-- Map -->
+    <div class="gtf-locations__map">
+      <iframe
+  id="gtf-map"
+  src="https://www.google.com/maps/d/u/0/embed?mid=1G2Jf9KVmwG-B9D_LMtZhaqxVLS6H1RM&ehbc=2E312F&noprof=1&z=12&ll=28.678,77.138"
+  loading="lazy"
+  allowfullscreen>
+</iframe>
+      <div class="gtf-locations__map-overlay"></div>
     </div>
-    
-  </footer>
-  <script>
-  // ── Custom cursor ──
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove', e => {
-    mx=e.clientX; my=e.clientY;
-    cursor.style.left=mx+'px'; cursor.style.top=my+'px';
-  });
-  function animRing(){
-    rx+=(mx-rx)*.13; ry+=(my-ry)*.13;
-    ring.style.left=rx+'px'; ring.style.top=ry+'px';
-    requestAnimationFrame(animRing);
+ 
+  </div><!-- /body -->
+ 
+</section>
+ <script>
+  const myMapBase =
+    "https://www.google.com/maps/d/u/0/embed?mid=1G2Jf9KVmwG-B9D_LMtZhaqxVLS6H1RM&ehbc=2E312F&noprof=1";
+
+  function switchMap(card) {
+    document.querySelectorAll(".gtf-loc-card").forEach(function(item) {
+      item.classList.remove("active");
+    });
+
+    card.classList.add("active");
+
+    const map = document.getElementById("gtf-map");
+    const lat = card.dataset.lat;
+    const lng = card.dataset.lng;
+    const zoom = card.dataset.zoom || 15;
+
+    map.style.opacity = "0.35";
+
+    map.src = `${myMapBase}&z=${zoom}&ll=${lat},${lng}`;
+
+    map.onload = function() {
+      map.style.opacity = "1";
+    };
   }
-  animRing();
-  document.querySelectorAll('a,button,input').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{
-      cursor.style.width='13px'; cursor.style.height='13px';
-      ring.style.width='48px'; ring.style.height='48px'; ring.style.opacity='.35';
-    });
-    el.addEventListener('mouseleave',()=>{
-      cursor.style.width='7px'; cursor.style.height='7px';
-      ring.style.width='30px'; ring.style.height='30px'; ring.style.opacity='1';
-    });
-  });
-
-  // ── Hide nav on scroll ──
-  const nav = document.getElementById('mainNav');
-  let lastScrollY = 0, ticking = false;
-  const HIDE_THRESHOLD = 90;
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        const currentY = window.scrollY;
-        if (currentY > HIDE_THRESHOLD) {
-          nav.classList.toggle('nav--hidden', currentY > lastScrollY);
-          if (currentY <= lastScrollY) nav.classList.add('nav--solid');
-        } else {
-          nav.classList.remove('nav--hidden');
-          nav.classList.remove('nav--solid');
-        }
-        lastScrollY = currentY;
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }, { passive: true });
-
-  // ── Scroll reveal ──
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.style.opacity='1';
-        e.target.style.transform='translateY(0)';
-      }
-    });
-  },{threshold:.08});
-  document.querySelectorAll('.feature-card-dark,.stat-item,.product-card,.fi-badge,.split-text-panel').forEach(el=>{
-    el.style.opacity='0';
-    el.style.transform='translateY(20px)';
-    el.style.transition='opacity .75s ease, transform .75s ease';
-    io.observe(el);
-  });
-
-  // ── Force video play (handles autoplay policy) ──
-  document.querySelectorAll('video').forEach(vid => {
-    vid.muted = true;
-    const playPromise = vid.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(() => {
-        // Autoplay blocked — fallback gradient already visible
-      });
-    }
-  });
-
-  </script><div id="emailPopup" class="popup">
-    <div class="popup-box">
-      <span class="close" onclick="closePopup()">&times;</span>
-      <h2>Join The Waitlist</h2>
-      <p>Get launch updates for every product by entering your email just once!</p>
-      <form id="notifyForm">
-        <input type="email" id="email" placeholder="Enter your email or mobile number" required>
-        <button type="submit">Receive Updates!</button>
-      </form>
+</script>
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-intro">
+      <div>
+        <div class="section-eyebrow">What We Offer</div>
+        <h2 class="section-title">Fitness Classes<br>& <em>Services</em></h2>
+      </div>
+      <p class="section-lead">From strength training to nutritional counseling — every program is designed with purpose. Our certified trainers build a plan that works for your unique body and goals.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">Strength Training</div>
+        <div class="service-desc">Imposing progressively greater resistance using free weights, machines, or body weight to build lasting muscle strength.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">Spin Cycling</div>
+        <div class="service-desc">A real-life cycling experience fueled by energizing music — tailor-made cardio challenges for your personal fitness level.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">Kickboxing</div>
+        <div class="service-desc">A unique, fun-filled workout that burns calories, boosts energy, improves posture, and teaches self-defense.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-name">Kettlebell Training</div>
+        <div class="service-desc">Engages your entire body at once — building strength and endurance through large repetitions and compound movements.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-name">Sport-Specific Training</div>
+        <div class="service-desc">Customized plans that target all aspects of athletic fitness — speed, agility, endurance and sport-specific strength.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-name">Fat-Loss Programmes</div>
+        <div class="service-desc">Shed extra kilos with our specifically designed fat loss programs built to meet every individual's needs.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">07</div>
+        <div class="service-name">Injury Rehab & Physio</div>
+        <div class="service-desc">Regain your full strength after injury or surgery with regular visits from qualified physiotherapists.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">08</div>
+        <div class="service-name">Cardiovascular Training</div>
+        <div class="service-desc">Designed to increase endurance by improving the performance of your heart and lungs through targeted workouts.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">09</div>
+        <div class="service-name">Olympic Lifting</div>
+        <div class="service-desc">Burns calories, improves strength, speed and agility while boosting performance across all physical activities.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">10</div>
+        <div class="service-name">TRX Suspension Training</div>
+        <div class="service-desc">A versatile system that uses your body weight and gravity to perform hundreds of effective exercises.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">11</div>
+        <div class="service-name">Nutritional Counseling</div>
+        <div class="service-desc">Expert nutritional advice and customized diet plans with the perfect balance of nutrients for your goals.</div>
+        <span class="service-arrow">→</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">12</div>
+        <div class="service-name">Muscle-Gain Programmes</div>
+        <div class="service-desc">Gain muscle mass with the right fitness regimen — guided by gym instructors and nutritional counselors together.</div>
+        <span class="service-arrow">→</span>
+      </div>
     </div>
   </div>
+</section>
 
-  <script>
-  function openPopup(){
-    document.getElementById("emailPopup").style.display = "flex";
-  }
+<!-- EQUIPMENT / TECH -->
+<section id="equipment">
+  <div class="container">
+    <div class="section-eyebrow">Technology & Facilities</div>
+    <h2 class="section-title">Smart Gym<br><em>Features</em></h2>
+    <p class="section-lead">We combine cutting-edge fitness technology with premium facilities to give every member the best possible experience.</p>
+    <div class="equipment-grid">
+      <div class="equip-card">
+        <div class="equip-icon">🔬</div>
+        <div class="equip-title">BCA Machine</div>
+        <div class="equip-desc">A complete Body Composition Analysis machine providing detailed BMI, muscle mass, and fat percentage analysis. Members can view their full history from anywhere via our website — keeping track of real fitness progress over time.</div>
+      </div>
+      <div class="equip-card">
+        <div class="equip-icon">📋</div>
+        <div class="equip-title">Digital Schedule Cards</div>
+        <div class="equip-desc">Electronically accessible personalised schedule cards — a six-day-per-week plan customized for your body type and fitness goals. Access from anywhere in the world through our website on any device.</div>
+      </div>
+      <div class="equip-card">
+        <div class="equip-icon">🔐</div>
+        <div class="equip-title">Fingerprint Access System</div>
+        <div class="equip-desc">Hassle-free entry and exit controlled by a fingerprint access system — automatically marking attendance and tracking time spent in the gym. Renewals are updated in real time for uninterrupted access.</div>
+      </div>
+      <div class="equip-card">
+        <div class="equip-icon">🔒</div>
+        <div class="equip-title">Secure Lockers</div>
+        <div class="equip-desc">Safe, secure and simple locker service to safely store all your valuable belongings while you train. Your gear stays protected so you can focus entirely on your workout.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  function closePopup(){
-    document.getElementById("emailPopup").style.display = "none";
-  }
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-eyebrow">Member Stories</div>
+    <h2 class="section-title">What Our<br><em>Members</em> Say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">The trainers here are world-class. I came in with no fitness background and within three months I've lost 14 kg. The personalized schedule card system is a game-changer.</p>
+        <div class="testimonial-author"><strong>Rahul Sharma</strong><span>Member since 2021</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">The BCA machine tracking is incredible — I can literally see my body composition change week over week. The café is a bonus; healthy food that actually tastes great.</p>
+        <div class="testimonial-author"><strong>Priya Mehta</strong><span>Member since 2020</span></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">After my knee surgery, the physiotherapy program here got me back to full strength faster than I expected. The team genuinely cares about your wellbeing.</p>
+        <div class="testimonial-author"><strong>Arun Kapoor</strong><span>Rehab Member</span></div>
+      </div>
+        </div>
 
-  // 🔧 REPLACE with your Apps Script Web App URL from Step 2
-  const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbwKpEX-hgefWiM0Yt3amy_yVK-DBb6JZBLqTHzeWEWEyGagiUtYk18qqd2O_Cdozjoa/exec";
+    <div class="review-cta">
+      <p>TRAINED WITH US? TELL US HOW WE DID.</p>
 
-  document.getElementById("notifyForm").addEventListener("submit", async function(e){
-    e.preventDefault();
+      <a href="https://www.google.com/search?sca_esv=eeb84f3a1330d64b&cs=1&sxsrf=APpeQnuaAnJZEeAJPb6dA0zylXKzjZItWg:1782388526822&si=APenkKnzv9m99ToiohAuzpadUwbOz34nZJ3j2Ukmo5XOUYWApgGXkAF90-yQHiuq_cx8velmUDQoZlJ8-PxEPYfUEr-ob8IMYtqVpxZ6Iv-H35KWxldWcATQ_WsbXv2NoURFZeppfrtWTeYezSTVXO1wD0xVRTa63Q%3D%3D&q=The+Global+Fitness+Reviews&sa=X&ved=2ahUKEwiEs_jXqqKVAxUvZWwGHYxNBqAQ0bkNegQIIBAF&biw=1280&bih=631&dpr=1.5#lrd=0x390d04c20d44c731:0xed7165f3cfd49629,3,,,,"
+         target="_blank"
+         rel="noopener"
+         class="review-btn">
+        ★ LEAVE A GOOGLE REVIEW
+      </a>
+    </div>
 
-    const email = document.getElementById("email").value;
+  </div>
+</section>
 
-    try {
-      const response = await fetch(SHEETS_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain" }, // avoids CORS preflight issues with Apps Script
-        body: JSON.stringify({ email: email })
-      });
+<!-- TRAINERS -->
+<section id="trainers">
+  <div class="container">
+    <div class="section-eyebrow">Our Experts</div>
+    <h2 class="section-title">Certified<br><em>Trainers</em></h2>
+    <div class="trainers-intro">
+      <p class="section-lead">The Global Fitness trainers have the knowledge and tools to set fitness-based training programs that get results in the quickest, most effective way possible — whether you're training for an event or for general fitness.</p>
+    </div>
+    <div class="trainers-img-grid">
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?w=400&q=80" alt="Personal Trainer" loading="lazy">
+        <div class="trainer-overlay"><div class="trainer-name">Strength Coach</div><div class="trainer-role">Certified Personal Trainer</div></div>
+      </div>
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=400&q=80" alt="Fitness Trainer" loading="lazy">
+        <div class="trainer-overlay"><div class="trainer-name">Cardio Specialist</div><div class="trainer-role">Group Fitness & Spinning</div></div>
+      </div>
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" alt="Nutrition Coach" loading="lazy">
+        <div class="trainer-overlay"><div class="trainer-name">Nutrition Expert</div><div class="trainer-role">Dietitian & Wellness Coach</div></div>
+      </div>
+      <div class="trainer-card">
+        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80" alt="Physiotherapist" loading="lazy">
+        <div class="trainer-overlay"><div class="trainer-name">Physio Specialist</div><div class="trainer-role">Injury Rehab & Recovery</div></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      const result = await response.json();
+<!-- AMENITIES -->
+<section id="amenities">
+  <div class="container">
+    <div class="section-eyebrow">Beyond Training</div>
+    <h2 class="section-title">Café, Spa &<br><em>Amenities</em></h2>
+    <div class="amenities-grid">
+      <img class="amenities-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=80" alt="Café Healthy Bite" loading="lazy">
+      <div>
+        <div class="amenity-item">
+          <div class="amenity-icon">☕</div>
+          <div class="amenity-info">
+            <strong>Café Healthy Bite</strong>
+            <p>Our in-house café serves nutritionally balanced and diet-friendly foods — guilt-free fast food that actually tastes great. Meal plans tailored for weight loss, muscle gain, or clean eating.</p>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <div class="amenity-icon">🧖</div>
+          <div class="amenity-info">
+            <strong>Steam Room & Spa</strong>
+            <p>Rejuvenate your senses in exclusive steam rooms with a combination of showers available for both men and women.</p>
+          </div>
+        </div>
+        <div class="amenity-item">
+          <div class="amenity-icon">🏢</div>
+          <div class="amenity-info">
+            <strong>Group Activity Studio</strong>
+            <p>A dedicated studio for group classes and fun member events — building a sense of community that goes beyond exercise.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-      if (result.result === "success") {
-        alert("You're on the waitlist ✨");
-        document.getElementById("notifyForm").reset();
-        closePopup();
-      } else {
-        alert("Submission failed. Try again.");
-      }
+<!-- CAREERS -->
+<section id="careers">
+  <div class="container">
+    <div class="section-eyebrow">Join The Team</div>
+    <h2 class="section-title">Are You Fit for<br><em>The Global Fitness?</em></h2>
+    <div class="careers-grid">
+      <div>
+        <p class="section-lead">We are proactively seeking dynamic, passionate individuals to meet our rapid expansion needs. Exciting careers and learning opportunities for young, fit and ambitious professionals.</p>
+        <ul class="career-checks">
+          <li>Passion for fitness</li>
+          <li>Desire for learning</li>
+          <li>Fitness certification</li>
+          <li>Flair for communication</li>
+          <li>Willingness to support</li>
+          <li>Quality to deliver</li>
+          <li>Consistency to perform</li>
+          <li>Knowledge of the industry</li>
+          <li>Experience of the business</li>
+        </ul>
+        <a href="#contact" class="btn-primary">Apply Today</a>
+      </div>
+      <div class="careers-perks">
+        <div class="perk"><strong>World-Class Equipment</strong><p>Train and work with the best equipment in the industry — stay at the cutting edge of fitness science.</p></div>
+        <div class="perk"><strong>International Exposure</strong><p>Exposure to international fitness management techniques and a globally-aware approach to health.</p></div>
+        <div class="perk"><strong>Rewarding Career</strong><p>A professionally rewarding career path with opportunities to grow within a rapidly expanding organization.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    } catch (error) {
-      alert("Network error. Please try again.");
-      console.log(error);
-    }
-  });
-  document.querySelectorAll('.blnd-card').forEach(card => {
-  card.addEventListener('click', function(e) {
-    if (e.target.closest('button')) return;
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-eyebrow">Get In Touch</div>
+    <h2 class="section-title">Start Your<br><em>Journey Today</em></h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-block">
+          <div class="contact-label">Location</div>
+          <div class="contact-value">, Delhi, India</div>
+        </div>
+        <div class="contact-block">
+          <div class="contact-label">Hours</div>
+          <div class="contact-value">Mon–Sat: 5:30 AM – 11:00 PM<br>Sunday: 9:00 AM – 9:00 PM</div>
+        </div>
+        <div class="contact-block">
+          <div class="contact-label">Mission</div>
+          <div class="contact-value" style="font-style:italic;color:rgba(245,245,245,0.7);">"To inspire people of all ages to enhance the quality of human life by reaching higher fitness goals and empowering clients with knowledge to make healthy lifestyle choices."</div>
+        </div>
+        <div style="margin-top:32px;">
+          <p style="font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--orange);letter-spacing:3px;">Get In... Get Fit... Get Life…</p>
+        </div>
+      </div>
+      <div>
+        <form class="contact-form" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-field"><label>Full Name</label><input type="text" placeholder="Your name"></div>
+            <div class="form-field"><label>Phone</label><input type="tel" placeholder="+91 00000 00000"></div>
+          </div>
+          <div class="form-field"><label>Email Address</label><input type="email" placeholder="you@email.com"></div>
+          <div class="form-field">
+            <label>Interested In</label>
+            <select>
+              <option>Membership Enquiry</option>
+              <option>Personal Training</option>
+              <option>Group Classes</option>
+              <option>Careers</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-field"><label>Message</label><textarea placeholder="Tell us about your fitness goals…"></textarea></div>
+          <div class="form-submit"><button type="submit" class="btn-primary" style="border:none;cursor:pointer;width:100%;font-size:1rem;">Send Message</button></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-    const isOpen = this.classList.contains('is-open');
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="l1-removebg-preview.png">
+        <p>The Global Fitness — . State-of-the-art facility, certified trainers, and a community committed to your best health.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">The Gym</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#trainers">Trainers</a></li>
+          <li><a href="#careers">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Strength Training</a></li>
+          <li><a href="#services">Spin Cycling</a></li>
+          <li><a href="#services">Kickboxing</a></li>
+          <li><a href="#services">Fat-Loss</a></li>
+          <li><a href="#services">Physiotherapy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Amenities</h4>
+        <ul>
+          <li><a href="#amenities">Café Healthy Bite</a></li>
+          <li><a href="#amenities">Steam Room & Spa</a></li>
+          <li><a href="#equipment">BCA Machine</a></li>
+          <li><a href="#equipment">Digital Schedules</a></li>
+          <li><a href="#equipment">Secure Lockers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 The Global Fitness, . All rights reserved.</p>
+      <div class="footer-tagline">Get In · Get Fit · Get Life</div>
+    </div>
+  </div>
+</footer>
 
-    document.querySelectorAll('.blnd-card').forEach(c => {
-      c.classList.remove('is-open');
+<a href="#home" class="scroll-to-top" title="Back to top">↑</a>
+
+<script>
+  // Inject logo base64
+  const LOGO = "l1-removebg-preview.png";
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
     });
+  });
 
-    if (!isOpen) {
-      this.classList.add('is-open');
+  // Nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--orange)' : '';
+    });
+  });
+
+  // Hamburger
+  document.querySelector('.hamburger').addEventListener('click', function() {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = 'none';
+    } else {
+      links.style.display = 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '72px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = 'rgba(10,10,10,0.98)';
+      links.style.padding = '20px 40px';
+      links.style.gap = '16px';
     }
   });
-});
-  </script>
 
-  </body>
-  </html>
+  // Intersection Observer for fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.service-card, .equip-card, .testimonial-card, .trainer-card, .amenity-item, .perk').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
